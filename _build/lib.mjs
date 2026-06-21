@@ -7,7 +7,7 @@ export const PHONE = cfg.phoneDisplay;
 export const TEL = cfg.phoneTel;
 export const EMAIL = cfg.email;
 export const SMS = `sms:${TEL}?&body=${encodeURIComponent(cfg.smsBody)}`;
-export const VER = "20260621";
+export const VER = String(Date.now());
 
 // ---- inline icons (currentColor) ----
 export const I = {
@@ -193,7 +193,7 @@ export function footer() {
     <p style="font-size:.9rem">Honestly great garage-door repair across Greater Vancouver. We just have a funny name. Same-day spring, opener, cable &amp; off-track repair — fixed right or we come back free.</p>
     <p style="font-size:.85rem">${I.shield} ${trustMicroline()}</p>
     <div class="footer__price-toggle" hidden data-jsonly>
-      <button class="btn" id="priceToggle" aria-expanded="false" aria-controls="footerPrices">${I.tag} See our prices</button>
+      <button class="btn footer-btn" id="priceToggle" aria-expanded="false" aria-controls="footerPrices">${I.tag} See our prices</button>
     </div>
     <div class="footer-prices" id="footerPrices">
       <h4>Honest Lower-Mainland pricing</h4>
@@ -227,7 +227,7 @@ export function footer() {
       <li>${I.clock} Mon–Sun, 7am–8pm</li>
       <li>${I.pin} Serving all of Greater Vancouver, BC</li>
     </ul>
-    <p style="margin-top:1rem"><a class="btn btn--primary btn--block" href="/become-a-partner.html">${I.handshake} Become a Partner</a></p>
+    <p style="margin-top:1rem"><a class="btn footer-btn" href="/become-a-partner.html">${I.handshake} Become a Partner</a></p>
   </div>
 </div>
 <div class="footer-bottom">

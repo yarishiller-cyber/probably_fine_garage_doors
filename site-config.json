@@ -53,9 +53,9 @@
   },
 
   "springPricing": {
-    "singleSpring": { "label": "Single spring replacement", "price": "189" },
-    "twoSpringsNewCables": { "label": "Two springs + new cables", "price": "329", "includes": ["new cables free"] },
-    "twoSpringsHighCycle": { "label": "Two high-cycle springs", "price": "419", "includes": ["new cables free", "longer-life springs"] },
+    "singleSpring": { "label": "Single spring replacement", "price": "710" },
+    "twoSpringsNewCables": { "label": "Two springs + new cables", "price": "840", "includes": ["new cables free"] },
+    "twoSpringsHighCycle": { "label": "Two high-cycle springs", "price": "1290", "includes": ["new cables free", "longer-life springs"] },
     "freeWithEveryJob": ["free cables on 2-spring tiers", "free safety inspection"]
   },
 

@@ -6,11 +6,11 @@ export const SERVICES = [
     slug: "garage-door-spring-repair", img: "spring", icon: I.spring,
     nav: "Spring Repair", money: true,
     seoTitle: "Garage Door Spring Repair Greater Vancouver | Probably Fine",
-    metaDesc: "Same-day broken garage door spring repair across Greater Vancouver. Flat pricing from $189, free cables on two-spring jobs, free safety inspection.",
+    metaDesc: "Same-day broken garage door spring repair across Greater Vancouver. Honest flat pricing, free cables on two-spring jobs, free safety inspection.",
     h1: "Garage Door Spring Repair in Greater Vancouver",
     sub: "Snapped torsion spring? Your car's stuck and your morning's ruined. We'll have it fixed today — at a price we tell you before we start.",
-    serviceType: "Garage Door Spring Replacement", priceMin: 189, priceMax: 419,
-    answer: `<p><strong>Most broken garage door springs in Metro Vancouver are replaced the same day for $189–$419</strong>, depending on whether you need one spring, a matched pair, or longer-life high-cycle springs. Every two-spring job includes <strong>new cables free</strong>, and every spring job includes a <strong>free safety inspection</strong>. You get a written quote before we lift a wrench — no $19.99 bait, no surprise "shaft fee" at the end.</p>`,
+    serviceType: "Garage Door Spring Replacement", priceMin: 710, priceMax: 1290,
+    answer: `<p><strong>Most broken garage door springs in Metro Vancouver are replaced the same day for $710–$1,290</strong>, depending on whether you need one spring, a matched pair, or longer-life high-cycle springs. Every two-spring job includes <strong>new cables free</strong>, and every spring job includes a <strong>free safety inspection</strong>. You get a written quote before we lift a wrench — no $19.99 bait, no surprise "shaft fee" at the end.</p>`,
     sections: [
       { h2: "How to tell your spring is the problem", html: `<p>A broken torsion spring is the most common garage-door emergency we see — and the easiest to misdiagnose in a panic. Tell-tale signs:</p>
 <ul>
@@ -25,7 +25,7 @@ export const SERVICES = [
       { h2: "Coastal rain is hard on springs", html: `<p>Greater Vancouver's damp, salty air corrodes torsion springs and cables faster than the drier Interior. We fit galvanized or coated springs where it makes sense, and we always check the cables and bearings while we're in there — corrosion rarely stops at just the spring.</p>` },
     ],
     faqs: [
-      { q: "How much does it cost to fix a broken garage door spring in Vancouver?", a: "A single torsion spring replacement is $189. Two springs with new cables included is $329, and two premium high-cycle springs (cables also free) is $419. You'll always get the written quote before we start." },
+      { q: "How much does it cost to fix a broken garage door spring in Vancouver?", a: "A single torsion spring replacement is $710. Two springs with new cables included is $840, and two premium high-cycle springs (cables also free) is $1,290. You'll always get the written quote before we start." },
       { q: "Can you replace my spring today?", a: "Usually, yes. Broken springs are our most common same-day call across Greater Vancouver. Call or text early and we'll give you a real arrival window, not a vague 'sometime today.'" },
       { q: "Is it safe to replace a garage door spring myself?", a: "We don't recommend it. Torsion springs are under extreme tension and have seriously injured DIYers. This is the one job where 'probably fine' isn't good enough — leave the winding bars to someone insured." },
       { q: "Do you charge a diagnostic fee?", a: "There's a $39 diagnostic call, and it's waived the moment you approve the repair — which is almost always. No hidden trip charges." },

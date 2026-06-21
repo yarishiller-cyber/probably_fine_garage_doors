@@ -65,6 +65,7 @@ function buildHome() {
   const body = `
 <main id="main">
 <section class="hero">
+<div class="hero__bg">${picture("home-hero", "Probably Fine technician beside the branded service van at a Greater Vancouver home", { eager: true })}</div>
 <div class="container">
 <div class="hero__inner">
   <div class="hero__copy" data-reveal>
@@ -81,20 +82,17 @@ function buildHome() {
       <span>${I.clock} Same-day across Metro Van</span>
     </div>
   </div>
-  <div class="hero__media" data-reveal="right" data-reveal-delay="0.1">
-    <div class="hero__photo">${picture("home-hero", "Probably Fine technician beside the branded van at a Vancouver home", { eager: true })}</div>
-    <div class="status-card" aria-hidden="false">
-      <div class="status-card__row">
-        <span class="status-card__title">Door Status</span>
-        <span class="status-pill">${I.check} Probably fine</span>
-      </div>
-      <ul>
-        <li>${I.check} Spring tension — balanced</li>
-        <li>${I.check} Cables &amp; drums — no fraying</li>
-        <li>${I.check} Opener &amp; safety sensors — pass</li>
-      </ul>
-      <p class="status-card__foot">Verified by a real technician. Not a guess.</p>
+  <div class="status-card">
+    <div class="status-card__row">
+      <span class="status-card__title">Door Status</span>
+      <span class="status-pill">${I.check} Probably fine</span>
     </div>
+    <ul>
+      <li>${I.check} Spring tension — balanced</li>
+      <li>${I.check} Cables &amp; drums — no fraying</li>
+      <li>${I.check} Opener &amp; safety sensors — pass</li>
+    </ul>
+    <p class="status-card__foot">Verified by a real technician. Not a guess.</p>
   </div>
 </div>
 </div>
@@ -245,6 +243,7 @@ function buildService(s) {
     serviceLD({ serviceType: s.serviceType, desc: s.metaDesc, path: `/${s.slug}.html`, ...priceObj }),
     faqLD(s.faqs),
   ];
+  if (s.openers) jsonld.push(openerListLD());
 
   let extra = "";
   if (s.money) extra += springTiers();
@@ -305,31 +304,61 @@ ${tier(t3, false, "Longest life")}
 </div>`;
 }
 
-function openerPicker() {
-  const all = [...manifest.primary.map((m) => ({ ...m, primary: true })), ...manifest.secondary.map((m) => ({ ...m, primary: false }))];
-  const row = (m) => {
-    const price = INSTALL_PRICE[m.sku];
-    const pills = m.specs.slice(0, 4).map((sp, i) => `<li class="${i === 0 ? "is-feature" : ""}">${sp}</li>`).join("");
-    return `<div class="opener${m.primary ? "" : " opener-extra"}"${m.primary ? "" : " hidden"}>
+const OPENERS_ALL = [...manifest.primary, ...manifest.secondary];
+const openerBySku = (sku) => OPENERS_ALL.find((m) => m.sku === sku);
+
+function openerListLD() {
+  return {
+    "@context": "https://schema.org", "@type": "ItemList",
+    "itemListElement": OPENERS_ALL.map((m, i) => ({
+      "@type": "ListItem", "position": i + 1,
+      "item": {
+        "@type": "Product", "name": m.name, "brand": { "@type": "Brand", "name": "LiftMaster" },
+        "image": `${BASE}/assets/openers/${m.image}`, "description": m.blurb,
+        "offers": { "@type": "Offer", "priceCurrency": "CAD", "price": String(INSTALL_PRICE[m.sku]), "availability": "https://schema.org/InStock", "seller": { "@id": `${BASE}/#business` } },
+      },
+    })),
+  };
+}
+
+function openerCard(m) {
+  const price = INSTALL_PRICE[m.sku];
+  const pills = m.specs.slice(0, 4).map((sp, i) => `<li class="${i === 0 ? "is-feature" : ""}">${sp}</li>`).join("");
+  return `<div class="opener">
   <div class="opener__main">
     <img class="opener__img" src="/assets/openers/${m.image}" alt="${m.imageAlt}" loading="lazy" width="150" height="118">
     <div class="opener__info">
       <span class="opener__tag">${m.tag}</span>
       <h3>${m.name}</h3>
-      <p class="opener__spec">${m.drive} · ${m.tagline}</p>
-      <p class="opener__price">from $${price} <span style="font-size:.8rem;font-weight:600;color:var(--ink-soft)">installed</span></p>
+      <p class="opener__spec">${m.hp} · ${m.tagline}</p>
+      <p class="opener__price">from $${price} <span class="opener__inst">installed</span></p>
       <ul class="opener__pills">${pills}</ul>
     </div>
   </div>
 </div>`;
-  };
+}
+
+function openerPicker() {
+  const groups = [
+    { id: "belt", title: "Belt-drive — the quietest", note: "Near-silent. The right call when there's a bedroom or living space above or beside the garage (common in newer Surrey & Richmond builds).", skus: ["6580L", "6690L", "4690"] },
+    { id: "chain", title: "Chain-drive — the value workhorse", note: "Tough, dependable and the best value for detached garages where a little noise doesn't matter.", skus: ["2220L", "2420L"] },
+    { id: "wall", title: "Wall-mount — the space-saver", note: "Bolts beside the door and clears the ceiling entirely — ideal for low-headroom laneway garages, car lifts and storage above.", skus: ["98022L", "98032"] },
+  ];
+  const chooser = `<div class="opener-chooser" data-stagger>
+  <a class="opener-pick" href="#belt"><span class="opener-pick__q">Bedroom or suite above the garage?</span><span class="opener-pick__a">${I.check} Go belt-drive</span></a>
+  <a class="opener-pick" href="#chain"><span class="opener-pick__q">Detached garage, want best value?</span><span class="opener-pick__a">${I.check} Go chain-drive</span></a>
+  <a class="opener-pick" href="#wall"><span class="opener-pick__q">Low ceiling, lift or laneway?</span><span class="opener-pick__a">${I.check} Go wall-mount</span></a>
+</div>`;
+  const sections = groups.map((g) => `<div class="opener-group">
+  <h3 id="${g.id}" class="opener-group__title">${g.title}</h3>
+  <p class="opener-group__note">${g.note}</p>
+  <div class="openers">${g.skus.map((sku) => openerCard(openerBySku(sku))).join("\n")}</div>
+</div>`).join("\n");
   return `<h2 id="openers">Pick the right LiftMaster opener</h2>
-<p>We install the LiftMaster line-up — the openers we trust on our own calls. Prices are supplied-and-installed, including programming and haul-away of your old unit.</p>
-<div class="openers" data-stagger style="margin:1.5rem 0">
-${all.map(row).join("\n")}
-</div>
-<button class="btn btn--ghost openers__toggle" id="openerToggle" aria-expanded="false">View more openers</button>
-<p class="muted" style="margin-top:1rem">Not sure which? Tell us what's above the garage (bedroom? nothing?) and how often the door runs — we'll recommend the right one, not the priciest one.</p>`;
+<p>We install the full LiftMaster line-up — the openers we trust on our own calls. Every price below is <strong>supplied &amp; installed</strong>, including programming, a remote, and haul-away of your old unit. Not sure? Start with the quick guide.</p>
+${chooser}
+${sections}
+<p class="muted" style="margin-top:1.5rem">Still unsure? Tell us what's above the garage and how often the door runs — we'll recommend the right opener, not the priciest one. We're genuinely bad at upselling.</p>`;
 }
 
 // ============================ CITY PAGES ============================
