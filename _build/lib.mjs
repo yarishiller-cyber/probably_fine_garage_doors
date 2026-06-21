@@ -249,7 +249,7 @@ export function scripts() {
 <script type="module">
   import { animate, inView, scroll, stagger } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
   window.__motion = { animate, inView, scroll, stagger };
-  import("/js/motion.js").then(m => m.initMotion());
+  import("/js/motion.js?v=${VER}").then(m => m.initMotion());
 </script>
 </body>
 </html>`;

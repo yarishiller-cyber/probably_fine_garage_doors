@@ -1,34 +1,26 @@
 /**
- * motion.js — the fleet's animation layer.
+ * motion.js — the fleet's animation layer (bulletproof reveal).
  *
- * WHY THIS FILE: the video that inspired this fleet uses "Framer Motion" — but that is a
- * React library and our stack is **static HTML/CSS/vanilla JS, no build step**. The vanilla
- * sibling of Framer Motion is **Motion** (https://motion.dev), the SAME engine, loadable
- * straight from a CDN with zero build. This file wraps it into a drop-in, declarative,
- * accessibility-safe layer so every site gets premium, Framer-Motion-quality motion by
- * adding a couple of `data-*` attributes — no per-site JS wiring required.
+ * Built on Motion (https://motion.dev) loaded from a CDN — same engine as Framer Motion,
+ * vanilla, no build step. Animates with declarative data-* attributes.
  *
- * HOW TO USE (per site):
- *   1. Copy this file to the site root (e.g. /js/motion.js) or reference it.
- *   2. Load Motion + this file before </body>:
- *        <script type="module">
- *          import { animate, inView, scroll, stagger } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
- *          window.__motion = { animate, inView, scroll, stagger };
- *          import("./js/motion.js").then(m => m.initMotion());
- *        </script>
- *   3. Mark up elements declaratively:
- *        <h1 data-reveal>…</h1>                          fade + rise on scroll-in
- *        <div data-reveal="left" data-reveal-delay="0.1">…</div>
- *        <ul data-stagger>            <li>…</li> …        children reveal in sequence
- *        <img data-parallax="0.2" src=…>                 subtle scroll parallax
- *        <a class="btn" data-hover-lift>Call now</a>      springy hover (CSS-driven)
+ * HARD RULE: content must NEVER stay hidden. Earlier versions hid [data-reveal] elements at
+ * opacity:0 and only revealed them when an IntersectionObserver threshold was met — which
+ * never happened for elements taller than the viewport (e.g. a long article column), leaving
+ * whole page bodies blank on real phones. This version:
+ *   - never hides an element that's already in the viewport or taller than ~85% of it,
+ *   - triggers as soon as an element's edge enters (low threshold),
+ *   - and runs a failsafe timer that force-reveals anything still hidden.
  *
- * ACCESSIBILITY: every animation is skipped (content shown immediately, no transforms)
- * when the user has `prefers-reduced-motion: reduce`. This is non-negotiable — see
- * playbooks/DESIGN.md and ANIMATION.md.
+ * USAGE (per site): load Motion + this file before </body>:
+ *   <script type="module">
+ *     import { animate, inView, scroll, stagger } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
+ *     window.__motion = { animate, inView, scroll, stagger };
+ *     import("./js/motion.js").then(m => m.initMotion());
+ *   </script>
  *
- * Performance: Motion's animate() is ~2.3kb for HTML and runs GPU-accelerated (transform +
- * opacity only). Keep it to transform/opacity so we stay at 60–120fps and protect Lighthouse.
+ * Attributes: data-reveal[="left|right|down"], data-reveal-delay, data-stagger, data-parallax.
+ * Accessibility: everything is skipped under prefers-reduced-motion: reduce.
  */
 
 const REDUCED = typeof window !== "undefined"
@@ -43,57 +35,55 @@ const REVEAL_OFFSETS = {
   none:  { x: 0,   y: 0  },
 };
 
+function showEl(el) { el.style.opacity = "1"; el.style.transform = "none"; }
+function showChildren(parent) { Array.from(parent.children).forEach((c) => { c.style.opacity = "1"; c.style.transform = "none"; }); }
+
 export function initMotion() {
   const M = (typeof window !== "undefined" && window.__motion) || null;
 
-  // If Motion failed to load (offline/CDN blocked) OR reduced-motion is on, reveal
-  // everything immediately so content is never hidden. Progressive enhancement.
+  // No Motion (CDN blocked) or reduced-motion → show everything immediately.
   if (!M || REDUCED) {
-    document.querySelectorAll("[data-reveal], [data-stagger]").forEach((el) => {
-      el.style.opacity = "1";
-      el.style.transform = "none";
-      el.querySelectorAll(":scope > *").forEach((c) => {
-        c.style.opacity = "1";
-        c.style.transform = "none";
-      });
-    });
+    document.querySelectorAll("[data-reveal]").forEach(showEl);
+    document.querySelectorAll("[data-stagger]").forEach(showChildren);
     return;
   }
 
   const { animate, inView, scroll } = M;
+  const vh = () => window.innerHeight || document.documentElement.clientHeight;
 
-  // --- Scroll reveals: fade + directional rise -----------------------------------------
+  // --- Scroll reveals -------------------------------------------------------------------
   document.querySelectorAll("[data-reveal]").forEach((el) => {
     const dir = el.getAttribute("data-reveal") || "up";
     const off = REVEAL_OFFSETS[dir] || REVEAL_OFFSETS.up;
     const delay = parseFloat(el.getAttribute("data-reveal-delay") || "0");
+    const r = el.getBoundingClientRect();
+
+    // Already visible on load, or too tall to ever cross a threshold → just show it.
+    const alreadyVisible = r.top < vh() && r.bottom > 0;
+    const tooTall = r.height > vh() * 0.85;
+    if (alreadyVisible || tooTall) { showEl(el); return; }
 
     el.style.opacity = "0";
     el.style.transform = `translate(${off.x}px, ${off.y}px)`;
-
-    inView(el, () => {
-      animate(el, { opacity: 1, transform: "translate(0px, 0px)" },
-        { duration: 0.6, delay, easing: [0.16, 1, 0.3, 1] });
-    }, { amount: 0.2 });
+    let done = false;
+    const run = () => { if (done) return; done = true; animate(el, { opacity: 1, transform: "translate(0px, 0px)" }, { duration: 0.6, delay, easing: [0.16, 1, 0.3, 1] }); };
+    inView(el, run, { amount: 0.01, margin: "0px 0px -10% 0px" });
   });
 
-  // --- Staggered children (lists, card grids) ------------------------------------------
+  // --- Staggered children ---------------------------------------------------------------
   document.querySelectorAll("[data-stagger]").forEach((parent) => {
     const children = Array.from(parent.children);
     const step = parseFloat(parent.getAttribute("data-stagger") || "0.08") || 0.08;
-    children.forEach((c) => {
-      c.style.opacity = "0";
-      c.style.transform = "translateY(20px)";
-    });
-    inView(parent, () => {
-      children.forEach((c, i) => {
-        animate(c, { opacity: 1, transform: "translateY(0px)" },
-          { duration: 0.55, delay: i * step, easing: [0.16, 1, 0.3, 1] });
-      });
-    }, { amount: 0.15 });
+    children.forEach((c) => { c.style.opacity = "0"; c.style.transform = "translateY(20px)"; });
+    let done = false;
+    const run = () => {
+      if (done) return; done = true;
+      children.forEach((c, i) => animate(c, { opacity: 1, transform: "translateY(0px)" }, { duration: 0.55, delay: i * step, easing: [0.16, 1, 0.3, 1] }));
+    };
+    inView(parent, run, { amount: 0.01, margin: "0px 0px -8% 0px" });
   });
 
-  // --- Subtle scroll parallax (heroes, section images) ---------------------------------
+  // --- Subtle parallax ------------------------------------------------------------------
   document.querySelectorAll("[data-parallax]").forEach((el) => {
     const intensity = parseFloat(el.getAttribute("data-parallax") || "0.2") || 0.2;
     scroll(
@@ -101,9 +91,15 @@ export function initMotion() {
       { target: el, offset: ["start end", "end start"] }
     );
   });
+
+  // --- FAILSAFE: never leave content hidden --------------------------------------------
+  setTimeout(() => {
+    document.querySelectorAll("[data-reveal]").forEach((el) => { if (parseFloat(getComputedStyle(el).opacity) < 0.99) showEl(el); });
+    document.querySelectorAll("[data-stagger]").forEach((p) => { Array.from(p.children).forEach((c) => { if (parseFloat(getComputedStyle(c).opacity) < 0.99) { c.style.opacity = "1"; c.style.transform = "none"; } }); });
+  }, 1600);
 }
 
-// Auto-init if Motion is already present on the window when this module loads.
+// Auto-init if Motion is already present when this module loads.
 if (typeof window !== "undefined") {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => { if (window.__motion) initMotion(); });
