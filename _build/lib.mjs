@@ -192,10 +192,10 @@ export function footer() {
     <div class="footer__brand"><span class="brand__mark">${I.door}</span> ${cfg.brandName}</div>
     <p style="font-size:.9rem">Honestly great garage-door repair across Greater Vancouver. We just have a funny name. Same-day spring, opener, cable &amp; off-track repair — fixed right or we come back free.</p>
     <p style="font-size:.85rem">${I.shield} ${trustMicroline()}</p>
-    <div class="footer__price-toggle">
+    <div class="footer__price-toggle" hidden data-jsonly>
       <button class="btn" id="priceToggle" aria-expanded="false" aria-controls="footerPrices">${I.tag} See our prices</button>
     </div>
-    <div class="footer-prices" id="footerPrices" hidden>
+    <div class="footer-prices" id="footerPrices">
       <h4>Honest Lower-Mainland pricing</h4>
       <table>
         <tr><td>Single torsion spring</td><td>$${p.singleSpring.price}</td></tr>
