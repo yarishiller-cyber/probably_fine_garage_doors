@@ -1,0 +1,19 @@
+{
+  "//": "Per-site MCP servers for design/UI generation. Copy this file to the site repo root as `.mcp.json`. Claude Code loads it automatically each session. Secrets are read from environment variables (set them as environment secrets in the Claude Code web config — see _shared/TECH-STACK.md). Delete any server you don't use.",
+
+  "mcpServers": {
+    "magic": {
+      "//": "21st.dev Magic — AI UI component generation. Needs TWENTYFIRST_API_KEY.",
+      "command": "npx",
+      "args": ["-y", "@21st-dev/magic@latest"],
+      "env": { "API_KEY": "${TWENTYFIRST_API_KEY}" }
+    },
+
+    "v0": {
+      "//": "Optional: Vercel v0 UI generation. Needs V0_API_KEY. Remove if unused.",
+      "command": "npx",
+      "args": ["-y", "v0-mcp@latest"],
+      "env": { "V0_API_KEY": "${V0_API_KEY}" }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+# build scratch + deps — not deployed
+_tmp/
+node_modules/
+*.log
+.DS_Store
