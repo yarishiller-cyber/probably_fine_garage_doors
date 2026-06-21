@@ -149,7 +149,7 @@ ${bg}
 ${bc}
 <h1>${h1}</h1>
 ${sub ? `<p>${sub}</p>` : ""}
-<div class="btn-row" style="margin-top:1.2rem">
+<div class="btn-row hero-cta" style="margin-top:1.2rem">
   <a class="btn btn--primary btn--lg" href="tel:${TEL}">${I.phone} Call ${PHONE}</a>
   <a class="btn btn--white" href="${SMS}">${I.msg} Text us</a>
 </div>

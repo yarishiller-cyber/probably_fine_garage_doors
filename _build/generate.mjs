@@ -39,7 +39,6 @@ function buildHome() {
   const svcCards = SERVICES.map((s) => `<a class="card svc-card hover-lift" href="/${s.slug}.html">
   <div class="svc-card__media zoom-frame">${picture(s.img, s.h1)}</div>
   <div class="svc-card__body">
-    <div class="card__icon">${s.icon}</div>
     <h3>${s.nav}</h3>
     <p>${cardLine(s.slug)}</p>
     <span class="card__link">Learn more ${I.arrow}</span>
@@ -72,7 +71,7 @@ function buildHome() {
     <div class="hero__rating"><span class="stars">${stars(5)}</span> <span>Loved by Greater Vancouver homeowners</span></div>
     <h1>We're not <span class="hl">"probably"</span> fine.<br>We're genuinely great.</h1>
     <p class="hero__sub">Same-day garage door spring, opener, cable &amp; off-track repair across Greater Vancouver — at a flat price we tell you <em>before</em> we start. Funny name. Serious work.</p>
-    <div class="btn-row" style="margin-top:1.6rem">
+    <div class="btn-row hero-cta" style="margin-top:1.6rem">
       <a class="btn btn--primary btn--lg cta-pulse" href="tel:${TEL}">${I.phone} Call ${PHONE}</a>
       <a class="btn btn--white btn--lg" href="${SMS}">${I.msg} Text us</a>
     </div>
@@ -380,7 +379,7 @@ function buildServicesHub() {
   const crumbs = [{ name: "Home", item: "/" }, { name: "Services", item: "/services.html" }];
   const cards = SERVICES.map((s) => `<a class="card svc-card hover-lift" href="/${s.slug}.html">
   <div class="svc-card__media zoom-frame">${picture(s.img, s.h1)}</div>
-  <div class="svc-card__body"><div class="card__icon">${s.icon}</div><h3>${s.nav}</h3><p>${cardLine(s.slug)}</p><span class="card__link">Learn more ${I.arrow}</span></div>
+  <div class="svc-card__body"><h3>${s.nav}</h3><p>${cardLine(s.slug)}</p><span class="card__link">Learn more ${I.arrow}</span></div>
 </a>`).join("\n");
   const jsonld = [breadcrumbLD(crumbs), businessLD()];
   const body = `

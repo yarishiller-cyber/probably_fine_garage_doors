@@ -360,9 +360,17 @@ strong { color:var(--ink); }
   .nav__phone-label { display:none; }
   .nav__links { display:none; }
   .nav__toggle { display:inline-flex; }
-  /* header phone becomes an icon-only button — keep it a ≥44px tap target */
-  .nav__phone { min-width:44px; min-height:44px; justify-content:center; border-radius:var(--r-sm); }
-  .nav__cta { padding:.7rem 1rem; }
+  /* thinner mobile header: compact padding, smaller brand, drop the redundant
+     "Call now" pill (the phone icon + bottom floating bar already cover it) */
+  .site-header .nav { padding-block:.35rem; }
+  .brand__mark { width:30px; height:30px; }
+  .brand__name { font-size:.82rem; line-height:1.12; }
+  .nav__cta { display:none; }
+  .nav__right { gap:var(--s-2); }
+  .nav__phone { min-width:42px; min-height:42px; justify-content:center; border-radius:var(--r-sm); }
+  .nav__toggle { min-width:42px; min-height:42px; }
+  /* hero / pagehead call+text buttons are redundant on mobile (floating bar) */
+  .hero-cta { display:none !important; }
   /* footer + breadcrumb links need comfortable tap height on mobile */
   .footer-grid li { margin-bottom:.15rem; }
   .footer-grid a, .footer-bottom a { display:inline-block; padding:.45rem 0; }
