@@ -5,18 +5,47 @@
 (function () {
   "use strict";
 
-  // ---- Mobile nav toggle ----
+  // ---- Mobile nav toggle + submenu accordion ----
   var nav = document.getElementById("nav");
   var navToggle = document.getElementById("navToggle");
+  var isMobile = function () { return window.matchMedia("(max-width: 820px)").matches; };
+  function closeNav() {
+    if (!nav) return;
+    nav.setAttribute("data-open", "false");
+    if (navToggle) { navToggle.setAttribute("aria-expanded", "false"); navToggle.setAttribute("aria-label", "Open menu"); }
+    nav.querySelectorAll(".has-menu.is-open").forEach(function (h) { h.classList.remove("is-open"); h.querySelector(".nav__parent").setAttribute("aria-expanded", "false"); });
+  }
   if (nav && navToggle) {
     navToggle.addEventListener("click", function () {
       var open = nav.getAttribute("data-open") === "true";
       nav.setAttribute("data-open", String(!open));
       navToggle.setAttribute("aria-expanded", String(!open));
+      navToggle.setAttribute("aria-label", open ? "Open menu" : "Close menu");
+      if (open) closeNav();
     });
+
+    // On mobile, tapping a parent toggles its submenu instead of navigating.
+    nav.querySelectorAll(".has-menu > .nav__parent").forEach(function (parent) {
+      parent.addEventListener("click", function (e) {
+        if (!isMobile()) return; // desktop = follow the link / hover dropdown
+        e.preventDefault();
+        var item = parent.parentElement;
+        var willOpen = !item.classList.contains("is-open");
+        // close siblings for a tidy accordion
+        nav.querySelectorAll(".has-menu.is-open").forEach(function (h) { if (h !== item) { h.classList.remove("is-open"); h.querySelector(".nav__parent").setAttribute("aria-expanded", "false"); } });
+        item.classList.toggle("is-open", willOpen);
+        parent.setAttribute("aria-expanded", String(willOpen));
+      });
+    });
+
+    // Any real navigation link closes the whole menu.
     nav.querySelectorAll(".nav__links a").forEach(function (a) {
-      a.addEventListener("click", function () { nav.setAttribute("data-open", "false"); navToggle.setAttribute("aria-expanded", "false"); });
+      a.addEventListener("click", function () { if (!a.classList.contains("nav__parent") || !isMobile()) closeNav(); });
     });
+
+    // Close menu on Escape / when resizing back to desktop.
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeNav(); });
+    window.addEventListener("resize", function () { if (!isMobile()) closeNav(); });
   }
 
   // ---- Footer price reveal toggle (degrades to visible if no JS) ----

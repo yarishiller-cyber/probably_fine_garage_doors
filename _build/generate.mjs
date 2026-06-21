@@ -217,8 +217,8 @@ ${ctaBand("Ready when you are", "Broken spring, dead opener, or a door that won'
 </main>`;
 
   return head({
-    title: "Probably Fine Garage Doors | Honest Garage Door Repair Greater Vancouver",
-    desc: "Same-day garage door repair across Greater Vancouver — springs, openers, cables & off-track. Funny name, serious work. Upfront flat pricing, licensed, insured, WorkSafeBC. Call 778-800-0769.",
+    title: "Garage Door Repair Greater Vancouver | Probably Fine",
+    desc: "Same-day garage door repair across Greater Vancouver — springs, openers, cables, off-track. Funny name, serious work. Upfront flat pricing, licensed & insured.",
     path: "/", preloadHero: "home-hero", jsonld,
   }) + header() + body + footer() + floating() + scripts();
 }
@@ -239,10 +239,10 @@ function cardLine(slug) {
 
 // ============================ SERVICE PAGES ============================
 function buildService(s) {
-  const crumbs = [{ name: "Home", item: "/" }, { name: "Services", item: "/garage-door-spring-repair.html" }, { name: s.nav, item: `/${s.slug}.html` }];
+  const crumbs = [{ name: "Home", item: "/" }, { name: "Services", item: "/services.html" }, { name: s.nav, item: `/${s.slug}.html` }];
   const priceObj = s.priceFrom ? { price: s.priceFrom } : { minPrice: s.priceMin, maxPrice: s.priceMax };
   const jsonld = [
-    breadcrumbLD([{ name: "Home", item: "/" }, { name: s.nav, item: `/${s.slug}.html` }]),
+    breadcrumbLD(crumbs),
     serviceLD({ serviceType: s.serviceType, desc: s.metaDesc, path: `/${s.slug}.html`, ...priceObj }),
     faqLD(s.faqs),
   ];
@@ -252,7 +252,7 @@ function buildService(s) {
   if (s.openers) extra += openerPicker();
 
   const sections = s.sections.map((sec) => `<h2>${sec.h2}</h2>\n${sec.html}`).join("\n");
-  const otherSvc = SERVICES.filter((x) => x.slug !== s.slug).slice(0, 4).map((x) => `<li><a href="/${x.slug}.html">${x.nav}</a></li>`).join("");
+  const otherSvc = SERVICES.filter((x) => x.slug !== s.slug).slice(0, 6).map((x) => `<a href="/${x.slug}.html">${x.icon} ${x.nav}</a>`).join("");
 
   const body = `
 <main id="main">
@@ -267,7 +267,7 @@ ${pagehead({ crumbs, h1: s.h1, sub: s.sub, img: s.img })}
     <h2>Frequently asked</h2>
     ${faqBlock(s.faqs)}
     <h2>Related services</h2>
-    <ul>${otherSvc}</ul>
+    <div class="area-grid">${otherSvc}</div>
     <p style="margin-top:1.5rem"><a href="/service-areas/">See all Greater Vancouver service areas ${I.arrow}</a></p>
   </div>
   ${quoteAside()}
@@ -375,6 +375,28 @@ ${ctaBand(`Garage door trouble in ${c.name}?`, `Call or text for a flat written 
   return head({ title: c.seoTitle, desc: c.metaDesc, path: `/service-areas/${c.slug}.html`, ogImg: `/assets/img/${c.img}-desktop-1600.webp`, preloadHero: c.img, jsonld }) + header() + body + footer() + floating() + scripts();
 }
 
+// ============================ SERVICES HUB ============================
+function buildServicesHub() {
+  const crumbs = [{ name: "Home", item: "/" }, { name: "Services", item: "/services.html" }];
+  const cards = SERVICES.map((s) => `<a class="card svc-card hover-lift" href="/${s.slug}.html">
+  <div class="svc-card__media zoom-frame">${picture(s.img, s.h1)}</div>
+  <div class="svc-card__body"><div class="card__icon">${s.icon}</div><h3>${s.nav}</h3><p>${cardLine(s.slug)}</p><span class="card__link">Learn more ${I.arrow}</span></div>
+</a>`).join("\n");
+  const jsonld = [breadcrumbLD(crumbs), businessLD()];
+  const body = `
+<main id="main">
+${pagehead({ crumbs, h1: "Garage Door Services Across Greater Vancouver", sub: "Every repair and install, one honest crew — flat pricing, same-day where we can, and a fixed-right-or-we-come-back guarantee. Pick a service for detail and real prices.", img: "spring" })}
+<section class="section">
+<div class="container">
+  <div class="center" data-reveal><span class="eyebrow">What we fix</span><h2>Pick your service</h2><p class="lead">Plain-language detail, honest pricing, and answers on every page.</p></div>
+  <div class="grid grid--3" style="margin-top:2.5rem" data-stagger>${cards}</div>
+</div>
+</section>
+${ctaBand("Not sure what's wrong?", "Tell us what the door's doing — we'll diagnose it honestly and quote it in writing before any work.")}
+</main>`;
+  return head({ title: "Garage Door Services Greater Vancouver | Probably Fine", desc: "All garage door services across Greater Vancouver — spring repair, openers, cables, off-track, rollers, new doors, tune-ups & emergency. Honest flat pricing.", path: "/services.html", preloadHero: "spring", jsonld }) + header() + body + footer() + floating() + scripts();
+}
+
 // ============================ SERVICE-AREAS HUB ============================
 function buildAreasHub() {
   const crumbs = [{ name: "Home", item: "/" }, { name: "Service Areas", item: "/service-areas/" }];
@@ -400,7 +422,7 @@ ${pagehead({ crumbs, h1: "Garage Door Repair Across Greater Vancouver", sub: "On
 </section>
 ${ctaBand("Not sure if you're in our area?", "If you're anywhere in Greater Vancouver, you almost certainly are. Call or text and we'll confirm an arrival window.")}
 </main>`;
-  return head({ title: "Service Areas — Garage Door Repair Greater Vancouver | Probably Fine", desc: "Probably Fine Garage Doors serves all of Greater Vancouver — Vancouver, Burnaby, Surrey, Richmond, Coquitlam and beyond. Same-day spring, opener, cable & off-track repair.", path: "/service-areas/", preloadHero: "city-vancouver", jsonld }) + header() + body + footer() + floating() + scripts();
+  return head({ title: "Garage Door Repair Service Areas | Probably Fine", desc: "Probably Fine serves all of Greater Vancouver — Vancouver, Burnaby, Surrey, Richmond, Coquitlam & beyond. Same-day spring, opener, cable & off-track repair.", path: "/service-areas/", preloadHero: "city-vancouver", jsonld }) + header() + body + footer() + floating() + scripts();
 }
 
 // ============================ SIMPLE PAGES ============================
@@ -432,7 +454,7 @@ function buildAbout() {
 ${quoteAside()}
 </div></div></section>
 ${ctaBand("Give the funny name a serious try", "Call or text — flat pricing, same-day service, and a guarantee that isn't a punchline.")}`;
-  return pageShell({ title: "About Probably Fine Garage Doors | Greater Vancouver", desc: "Canadian-owned, honest garage door repair across Greater Vancouver. Upfront flat pricing, trained techs, fixed-right guarantee — and a refreshingly silly name. Licensed, insured, WorkSafeBC.", path: "/about.html", h1: "Honestly great. We just have a funny name.", sub: "The story behind Probably Fine — and the very serious promises underneath the joke.", img: "about", preloadHero: "about", crumbs, inner, jsonld: [breadcrumbLD(crumbs), businessLD()] });
+  return pageShell({ title: "About | Probably Fine Garage Doors Greater Vancouver", desc: "Canadian-owned, honest garage door repair across Greater Vancouver. Upfront flat pricing, trained techs, fixed-right guarantee — and a refreshingly silly name.", path: "/about.html", h1: "Honestly great. We just have a funny name.", sub: "The story behind Probably Fine — and the very serious promises underneath the joke.", img: "about", preloadHero: "about", crumbs, inner, jsonld: [breadcrumbLD(crumbs), businessLD()] });
 }
 
 function buildContact() {
@@ -658,6 +680,7 @@ The name is a joke. The work is not.
 console.log("Building Probably Fine Garage Doors…");
 write("index.html", buildHome());
 const urls = ["/"];
+write("services.html", buildServicesHub()); urls.push("/services.html");
 for (const s of SERVICES) { write(`${s.slug}.html`, buildService(s)); urls.push(`/${s.slug}.html`); }
 write("service-areas/index.html", buildAreasHub()); urls.push("/service-areas/");
 for (const c of CITIES) { write(`service-areas/${c.slug}.html`, buildCity(c)); urls.push(`/service-areas/${c.slug}.html`); }

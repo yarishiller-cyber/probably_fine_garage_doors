@@ -90,7 +90,7 @@ const AREA_LINKS = [
 ];
 
 export function header() {
-  const svc = SERVICE_LINKS.map(([h, t]) => `<a href="${h}">${t}</a>`).join("");
+  const svc = [`<a href="/services.html">All services</a>`, ...SERVICE_LINKS.map(([h, t]) => `<a href="${h}">${t}</a>`)].join("");
   const areas = AREA_LINKS.map(([h, t]) => `<a href="${h}">${t}</a>`).join("");
   return `<header class="site-header">
 <div class="container">
@@ -99,9 +99,9 @@ export function header() {
     <span class="brand__mark">${I.door}</span>
     <span class="brand__name">Probably&nbsp;Fine <b>Garage&nbsp;Doors</b></span>
   </a>
-  <div class="nav__links">
-    <span class="has-menu"><a href="#" aria-haspopup="true">Services ▾</a><span class="submenu">${svc}</span></span>
-    <span class="has-menu"><a href="/service-areas/" aria-haspopup="true">Service Areas ▾</a><span class="submenu">${areas}</span></span>
+  <div class="nav__links" id="navLinks">
+    <span class="has-menu"><a class="nav__parent" href="/services.html" aria-haspopup="true" aria-expanded="false">Services <span class="caret" aria-hidden="true">▾</span></a><span class="submenu">${svc}</span></span>
+    <span class="has-menu"><a class="nav__parent" href="/service-areas/" aria-haspopup="true" aria-expanded="false">Service Areas <span class="caret" aria-hidden="true">▾</span></a><span class="submenu">${areas}</span></span>
     <a href="/garage-door-spring-repair.html">Pricing</a>
     <a href="/about.html">About</a>
     <a href="/faq.html">FAQ</a>
@@ -110,7 +110,7 @@ export function header() {
   <div class="nav__right">
     <a class="nav__phone" href="tel:${TEL}">${I.phone}<span class="nav__phone-label">${PHONE}</span></a>
     <a class="nav__cta" href="tel:${TEL}">Call now</a>
-    <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="nav">
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>
