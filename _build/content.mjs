@@ -1,5 +1,5 @@
 // content.mjs — unique copy for service + city pages (Probably Fine, deadpan-reassuring voice).
-import { I } from "./lib.mjs";
+import { I, px } from "./lib.mjs";
 
 export const SERVICES = [
   {
@@ -10,7 +10,7 @@ export const SERVICES = [
     h1: "Garage Door Spring Repair in Greater Vancouver",
     sub: "Snapped torsion spring? Your car's stuck and your morning's ruined. We'll have it fixed today — at a price we tell you before we start.",
     serviceType: "Garage Door Spring Replacement", priceMin: 710, priceMax: 1290,
-    answer: `<p><strong>Most broken garage door springs in Metro Vancouver are replaced the same day for $739–$1,274</strong>, depending on whether you need one spring, a matched pair, or longer-life high-cycle springs. Every two-spring job includes <strong>new cables free</strong>, and every spring job includes a <strong>free safety inspection</strong>. You get a written quote before we lift a wrench — no $19.99 bait, no surprise "shaft fee" at the end.</p>`,
+    answer: `<p><strong>Most broken garage door springs in Metro Vancouver are replaced the same day at a flat, posted price ${px("(tap Pricing in the footer)", "$739&ndash;$1,274")}</strong>, depending on whether you need one spring, a matched pair, or longer-life high-cycle springs. Every two-spring job includes <strong>new cables free</strong>, and every spring job includes a <strong>free safety inspection</strong>. You get a written quote before we lift a wrench — no $19.99 bait, no surprise "shaft fee" at the end.</p>`,
     sections: [
       { h2: "How to tell your spring is the problem", html: `<p>A broken torsion spring is the most common garage-door emergency we see — and the easiest to misdiagnose in a panic. Tell-tale signs:</p>
 <ul>
@@ -25,7 +25,7 @@ export const SERVICES = [
       { h2: "Coastal rain is hard on springs", html: `<p>Greater Vancouver's damp, salty air corrodes torsion springs and cables faster than the drier Interior. We fit galvanized or coated springs where it makes sense, and we always check the cables and bearings while we're in there — corrosion rarely stops at just the spring.</p>` },
     ],
     faqs: [
-      { q: "How much does it cost to fix a broken garage door spring in Vancouver?", a: "A single torsion spring replacement is $739. Two springs with new cables included is $851, and two premium high-cycle springs (cables also free) is $1,274. You'll always get the written quote before we start." },
+      { q: "How much does it cost to fix a broken garage door spring in Vancouver?", a: `Each option is flat-priced and posted up front (tap Pricing in the footer): a single torsion spring ${px("(tap Pricing)", "$739")}, two springs with new cables included ${px("(tap Pricing)", "$851")}, and two premium high-cycle springs with cables also free ${px("(tap Pricing)", "$1,274")}. You'll always get the written quote before we start.` },
       { q: "Can you replace my spring today?", a: "Usually, yes. Broken springs are our most common same-day call across Greater Vancouver. Call or text early and we'll give you a real arrival window, not a vague 'sometime today.'" },
       { q: "Is it safe to replace a garage door spring myself?", a: "We don't recommend it. Torsion springs are under extreme tension and have seriously injured DIYers. This is the one job where 'probably fine' isn't good enough — leave the winding bars to someone insured." },
       { q: "Do you charge a diagnostic fee?", a: "There's a $39 diagnostic call, and it's waived the moment you approve the repair — which is almost always. No hidden trip charges." },
@@ -63,16 +63,16 @@ export const SERVICES = [
     slug: "garage-door-opener-installation", img: "opener-install", icon: I.cog, openers: true,
     nav: "Opener Installation",
     seoTitle: "Garage Door Opener Installation Greater Vancouver | Probably Fine",
-    metaDesc: "New garage door opener supply & install across Greater Vancouver from $1,311. LiftMaster belt, chain & wall-mount with myQ smart control. Full warranty.",
+    metaDesc: "New garage door opener supply & install across Greater Vancouver at honest flat pricing. LiftMaster belt, chain & wall-mount with myQ smart control. Full warranty.",
     h1: "New Garage Door Opener Installation",
     sub: "Quiet belt-drive, rock-solid chain, or a wall-mount that frees your ceiling — installed clean, programmed to your phone, and rated for the way you actually use the door.",
     serviceType: "Garage Door Opener Installation", priceFrom: 1311,
-    answer: `<p><strong>A new LiftMaster opener supplied and professionally installed in Greater Vancouver typically runs from $1,311, including haul-away of the old unit.</strong> We fit belt-drive (quietest — ideal under a bedroom), chain-drive (toughest value), and wall-mount jackshaft openers, all with myQ smart-phone control and battery backup options so the door still works in a Lower Mainland power outage.</p>`,
+    answer: `<p><strong>A new LiftMaster opener supplied and professionally installed in Greater Vancouver runs at a flat posted rate ${px("(tap Pricing in the footer)", "from $1,311")}, including haul-away of the old unit.</strong> We fit belt-drive (quietest — ideal under a bedroom), chain-drive (toughest value), and wall-mount jackshaft openers, all with myQ smart-phone control and battery backup options so the door still works in a Lower Mainland power outage.</p>`,
     sections: [
       { h2: "Pick the drive that fits your home", html: `<p><strong>Belt-drive</strong> is near-silent — the right call when there's a bedroom or suite over the garage (common in newer Surrey and Richmond builds). <strong>Chain-drive</strong> is the dependable value pick for detached garages where noise doesn't matter. <strong>Wall-mount (jackshaft)</strong> bolts beside the door and clears the ceiling entirely — perfect for low-headroom laneway garages and car lifts. Battery backup keeps you moving when the power's out, which on the coast happens every winter.</p>` },
     ],
     faqs: [
-      { q: "How much does it cost to install a new garage door opener?", a: "From $1,311 supplied and installed, including programming and removal of your old opener. Belt-drive and wall-mount units sit higher than basic chain-drive." },
+      { q: "How much does it cost to install a new garage door opener?", a: `Supplied and installed at a flat posted price ${px("(tap Pricing)", "from $1,311")}, including programming and removal of your old opener. Belt-drive and wall-mount units sit higher than basic chain-drive.` },
       { q: "Which opener is quietest?", a: "A belt-drive opener. If you have living space above or beside the garage, it's worth the small premium — you'll stop hearing the door from the bedroom." },
       { q: "Will a smart opener work with my phone?", a: "Yes. The LiftMaster units we install include myQ, so you can open, close, and check the door from your phone, and get an alert if you left it open." },
       { q: "What happens in a power outage?", a: "We offer models with battery backup, so the door keeps opening through the winter outages we all get on the coast. Otherwise there's always the manual release." },
@@ -138,17 +138,17 @@ export const SERVICES = [
     slug: "new-garage-door-installation", img: "new-door", icon: I.door,
     nav: "New Garage Doors",
     seoTitle: "New Garage Door Installation Greater Vancouver | Probably Fine",
-    metaDesc: "New garage doors installed across Greater Vancouver from $3,647 — insulated steel, modern glass & carriage styles. Free measure & fixed written quote.",
+    metaDesc: "New garage doors installed across Greater Vancouver — insulated steel, modern glass & carriage styles. Free measure & fixed written quote, honest flat pricing.",
     h1: "New Garage Door Installation",
     sub: "Replacing a tired, dented, or draughty door? We measure, quote in writing, and install insulated steel, modern glass, or carriage-style doors that suit the house — and the rain.",
     serviceType: "New Garage Door Installation", priceFrom: 3647,
-    answer: `<p><strong>A new garage door supplied and installed in Greater Vancouver typically starts around $3,647 and ranges higher for insulated, glass, or custom carriage styles.</strong> We do a free on-site measure, give you a fixed written quote, remove and recycle the old door, and install a properly insulated, weather-sealed door built for coastal wet and wind. No vague "starting from" that triples on install day.</p>`,
+    answer: `<p><strong>A new garage door supplied and installed in Greater Vancouver starts at a fixed, written price ${px("(tap Pricing in the footer)", "around $3,647")} and ranges higher for insulated, glass, or custom carriage styles.</strong> We do a free on-site measure, give you a fixed written quote, remove and recycle the old door, and install a properly insulated, weather-sealed door built for coastal wet and wind. No vague "starting from" that triples on install day.</p>`,
     sections: [
       { h2: "Doors that suit Vancouver houses — and Vancouver weather", html: `<p><strong>Insulated steel</strong> is the workhorse: warm, quiet, low-maintenance, and the best value for an attached garage you're heating. <strong>Modern aluminium-and-glass</strong> sectional doors look right on the contemporary builds going up across the West Side and Surrey. <strong>Carriage-style</strong> doors flatter the character and craftsman homes of East Van, New West, and the North Shore. Every door we fit is weather-sealed against driving rain and chosen for our salt-air climate.</p>` },
       { h2: "What a fair quote includes", html: `<p>Our written quote covers the door, tracks, springs sized to the new weight, weather seals, removal and recycling of the old door, and the labour. If you want an opener fitted at the same time, see <a href="/garage-door-opener-installation.html">opener installation</a> — bundling saves a second trip.</p>` },
     ],
     faqs: [
-      { q: "How much does a new garage door cost installed in Vancouver?", a: "From about $3,647 for a standard insulated single door installed, more for double doors, glass, or carriage styles. You get a fixed written quote after a free measure — no install-day surprises." },
+      { q: "How much does a new garage door cost installed in Vancouver?", a: `A standard insulated single door installed is fixed-quoted ${px("(tap Pricing)", "from about $3,647")}, more for double doors, glass, or carriage styles. You get a fixed written quote after a free measure — no install-day surprises.` },
       { q: "Do you remove my old door?", a: "Yes — removal and recycling of the old door and hardware is included in the quote. You come home to a clean garage and a working door." },
       { q: "Should I insulate my garage door?", a: "On the coast, usually yes — an insulated door is warmer, much quieter, and stands up better to our damp. It's especially worth it for attached or heated garages." },
       { q: "How long does installation take?", a: "Most single-door replacements are a half-day; doubles and custom doors a little longer. We'll give you a real time window when we quote." },
