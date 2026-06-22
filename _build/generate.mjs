@@ -694,7 +694,11 @@ function buildFavicon() {
 }
 
 function buildManifest() {
-  return JSON.stringify({ name: cfg.brandName, short_name: "Probably Fine", start_url: "/", display: "standalone", background_color: "#ffffff", theme_color: "#0d4eb8", icons: [{ src: "/favicon.svg", sizes: "any", type: "image/svg+xml" }] });
+  return JSON.stringify({ name: cfg.brandName, short_name: "Probably Fine", start_url: "/", display: "standalone", background_color: "#ffffff", theme_color: "#0d4eb8", icons: [
+    { src: "/favicon.svg", sizes: "any", type: "image/svg+xml" },
+    { src: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    { src: "/assets/img/logo.png", sizes: "512x512", type: "image/png" },
+  ] });
 }
 
 function buildHumans() {

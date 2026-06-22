@@ -48,7 +48,7 @@ export function reviewCard(r, extraStyle = "") {
 }
 
 // ---- <head> ----
-export function head({ title, desc, path, ogImg = "/assets/img/home-hero-desktop-1600.webp", preloadHero = null, jsonld = [], noindex = false }) {
+export function head({ title, desc, path, ogImg = "/og/home.webp", preloadHero = null, jsonld = [], noindex = false }) {
   const canonical = BASE + path;
   const robots = noindex ? '\n<meta name="robots" content="noindex">' : "";
   const preload = preloadHero ? `
@@ -70,8 +70,18 @@ export function head({ title, desc, path, ogImg = "/assets/img/home-hero-desktop
 <meta property="og:url" content="${canonical}">
 <meta property="og:site_name" content="${cfg.brandName}">
 <meta property="og:image" content="${BASE}${ogImg}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${cfg.brandName} — blue-wrapped service van and technician at a Greater Vancouver home">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${desc}">
+<meta name="twitter:image" content="${BASE}${ogImg}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">${preload}
@@ -292,7 +302,8 @@ export function businessLD() {
         "@type": "HomeAndConstructionBusiness",
         "@id": `${BASE}/#business`,
         "name": cfg.brandName,
-        "image": `${BASE}/assets/img/home-hero-desktop-1600.webp`,
+        "image": `${BASE}/og/home.webp`,
+        "logo": `${BASE}/assets/img/logo.png`,
         "url": `${BASE}/`,
         "telephone": cfg.phone,
         "email": EMAIL,
