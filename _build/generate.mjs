@@ -9,7 +9,7 @@ import {
 import { SERVICES, CITIES } from "./content.mjs";
 
 const manifest = JSON.parse(readFileSync("/home/user/garagedoors-shared/assets/liftmaster/manifest.json", "utf8"));
-const INSTALL_PRICE = { "2220L": 539, "6580L": 689, "98022L": 789, "2420L": 599, "4690": 629, "6690L": 719, "98032": 749 };
+const INSTALL_PRICE = { "2220L": 1311, "6580L": 1448, "98022L": 2155, "2420L": 1384, "4690": 1466, "6690L": 1523, "98032": 1939 };
 
 const write = (path, html) => { const full = `${path}`; const dir = full.split("/").slice(0, -1).join("/"); if (dir) mkdirSync(dir, { recursive: true }); writeFileSync(full, html); console.log("  ✓ " + full); };
 
@@ -204,7 +204,7 @@ ${row("Spring replacement", `One spring $${p.singleSpring.price} · two springs 
 ${row("Cable repair", "Matched pair · free with any two-spring job", `from $${o.cableRepairFrom}`)}
 ${row("Off-track repair", "Re-track, straighten &amp; re-balance the door", `from $${o.offTrackFrom}`)}
 ${row("Opener repair", "Sensors, gears, boards, remotes — most brands", `from $${o.openerRepairFrom}`)}
-${row("LiftMaster opener — installed", "Chain, belt or wall-mount · programmed + haul-away", `from $${o.openerInstallFrom}`)}
+${row("LiftMaster opener — installed", "Chain, belt or wall-mount · programmed + haul-away", `from ${Number(o.openerInstallFrom).toLocaleString()}`)}
 ${row("Annual tune-up", "25-point service + safety test", `from $${o.tuneUpFrom}`)}
 ${row("New garage door", "Insulated steel, glass or carriage · free measure", `from $${Number(o.newDoorFrom).toLocaleString()}`)}
 <div class="pricenote">Diagnostic $${o.diagnostic}, ${o.diagnosticNote} · free safety inspection with every spring job · workmanship warranty as standard · certificates of insurance available for stratas &amp; property managers.</div>
@@ -216,7 +216,7 @@ function cardPrice(slug) {
   return {
     "garage-door-spring-repair": `$${p.singleSpring.price} / 1 · $${p.twoSpringsNewCables.price} / 2`,
     "garage-door-opener-repair": `from $${o.openerRepairFrom}`,
-    "garage-door-opener-installation": `from $${o.openerInstallFrom} installed`,
+    "garage-door-opener-installation": `from ${Number(o.openerInstallFrom).toLocaleString()} installed`,
     "garage-door-cable-repair": `from $${o.cableRepairFrom}`,
     "garage-door-off-track-repair": `from $${o.offTrackFrom}`,
     "garage-door-roller-repair": `from $${o.rollerFrom}`,
@@ -289,7 +289,7 @@ function springTiers() {
   const tier = (t, featured, flag) => `<div class="tier${featured ? " tier--featured" : ""}">
 ${flag ? `<span class="tier__flag">${flag}</span>` : ""}
 <h3>${t.label}</h3>
-<div class="tier__price">$${t.price}</div>
+<div class="tier__price">${Number(t.price).toLocaleString()}</div>
 <ul>${(t.bullets || []).map((b) => `<li>${I.check} ${b}</li>`).join("")}</ul>
 <a class="btn ${featured ? "btn--primary" : "btn--ghost"} btn--block" href="tel:${TEL}">${I.phone} Book this</a>
 </div>`;
@@ -337,7 +337,7 @@ function openerCard(m) {
       <span class="opener__tag">${m.tag}</span>
       <h3>${m.name}</h3>
       <p class="opener__spec">${m.hp} · ${m.tagline}</p>
-      <p class="opener__price">from $${price} <span class="opener__inst">installed</span></p>
+      <p class="opener__price">from ${price.toLocaleString()} <span class="opener__inst">installed</span></p>
       <ul class="opener__pills">${pills}</ul>
     </div>
   </div>
@@ -540,7 +540,7 @@ function buildFaq() {
   const crumbs = [{ name: "Home", item: "/" }, { name: "FAQ", item: "/faq.html" }];
   const faqs = [
     { q: "Is the name a joke?", a: "Yes — the name is the only thing we don't take seriously. We're genuinely great; the name just makes you remember us. We never joke about your safety, our competence, or your money." },
-    { q: "How much does garage door repair cost in Greater Vancouver?", a: `Most repairs are flat-priced: single spring $${cfg.springPricing.singleSpring.price}, two springs with free cables $${cfg.springPricing.twoSpringsNewCables.price}, two high-cycle springs $${cfg.springPricing.twoSpringsHighCycle.price}, cable repair from $${cfg.otherPricing.cableRepairFrom}, off-track from $${cfg.otherPricing.offTrackFrom}, opener repair from $${cfg.otherPricing.openerRepairFrom}, tune-up from $${cfg.otherPricing.tuneUpFrom}. You always get a written quote first.` },
+    { q: "How much does garage door repair cost in Greater Vancouver?", a: `Most repairs are flat-priced: single spring $${cfg.springPricing.singleSpring.price}, two springs with free cables $${cfg.springPricing.twoSpringsNewCables.price}, two high-cycle springs $${Number(cfg.springPricing.twoSpringsHighCycle.price).toLocaleString()}, cable repair from $${cfg.otherPricing.cableRepairFrom}, off-track from $${cfg.otherPricing.offTrackFrom}, opener repair from $${cfg.otherPricing.openerRepairFrom}, tune-up from $${cfg.otherPricing.tuneUpFrom}. You always get a written quote first.` },
     { q: "Do you offer same-day service?", a: "Most of the time, yes — broken springs and stuck doors are our most common same-day calls. Call or text early for the best chance at a same-day window." },
     { q: "Is it safe to fix a garage door spring myself?", a: "We strongly advise against it. Torsion springs store enormous energy and regularly injure DIYers. This is the one job where 'probably fine' truly isn't — leave the winding bars to insured pros." },
     { q: "Are you licensed and insured?", a: "Yes: a municipal business licence, WorkSafeBC coverage, and commercial liability insurance. Garage-door work is an unregulated trade in BC, so we're precise — we never imply a trade certificate that doesn't exist." },

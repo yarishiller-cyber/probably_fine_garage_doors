@@ -206,7 +206,7 @@ export function footer() {
       <table>
         <tr><td>Single torsion spring</td><td>$${p.singleSpring.price}</td></tr>
         <tr><td>Two springs + new cables (cables free)</td><td>$${p.twoSpringsNewCables.price}</td></tr>
-        <tr><td>Two high-cycle springs (cables free)</td><td>$${p.twoSpringsHighCycle.price}</td></tr>
+        <tr><td>Two high-cycle springs (cables free)</td><td>${Number(p.twoSpringsHighCycle.price).toLocaleString()}</td></tr>
         <tr><td>Cable repair</td><td>from $${o.cableRepairFrom}</td></tr>
         <tr><td>Off-track repair</td><td>from $${o.offTrackFrom}</td></tr>
         <tr><td>Opener repair</td><td>from $${o.openerRepairFrom}</td></tr>
