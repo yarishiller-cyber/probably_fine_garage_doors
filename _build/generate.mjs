@@ -4,7 +4,7 @@ import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import {
   cfg, BASE, PHONE, TEL, EMAIL, SMS, I, stars, reviewCard, px,
   head, header, floating, footer, scripts, picture, pagehead, ctaBand,
-  faqBlock, trustMicroline, businessLD, breadcrumbLD, serviceLD, faqLD,
+  faqBlock, trustMicroline, freshnessByline, businessLD, breadcrumbLD, serviceLD, faqLD,
 } from "./lib.mjs";
 import { SERVICES, CITIES } from "./content.mjs";
 
@@ -191,7 +191,7 @@ ${ctaBand("Ready when you are", "Broken spring, dead opener, or a door that won'
 
   return head({
     title: "Garage Door Repair Greater Vancouver | Probably Fine",
-    desc: "Same-day garage door repair across Greater Vancouver — springs, openers, cables, off-track. Funny name, serious work. Upfront flat pricing, licensed & insured.",
+    desc: "Same-day garage door repair across Greater Vancouver — springs, openers, cables, off-track. Funny name, serious work. Upfront flat pricing & licensed.",
     path: "/", preloadHero: "home-hero", jsonld,
   }) + header() + body + footer() + floating() + scripts();
 }
@@ -266,6 +266,7 @@ ${pagehead({ crumbs, h1: s.h1, sub: s.sub, img: s.img })}
 <div class="layout-split">
   <div class="prose" data-reveal>
     <div class="answer">${s.answer}</div>
+    ${freshnessByline()}
     ${sections}
     ${extra}
     <h2>Frequently asked</h2>
@@ -387,6 +388,7 @@ ${pagehead({ crumbs, h1: c.h1, sub: c.sub, img: c.img })}
 <div class="layout-split">
   <div class="prose" data-reveal>
     <div class="answer">${c.answer}</div>
+    ${freshnessByline()}
     <h2>Garage doors in ${c.name} — what we see</h2>
     ${c.local}
     <h2>Neighbourhoods we cover in ${c.name}</h2>
@@ -488,7 +490,7 @@ function buildAbout() {
 ${quoteAside()}
 </div></div></section>
 ${ctaBand("Give the funny name a serious try", "Call or text — flat pricing, same-day service, and a guarantee that isn't a punchline.")}`;
-  return pageShell({ title: "About | Probably Fine Garage Doors Greater Vancouver", desc: "Canadian-owned, honest garage door repair across Greater Vancouver. Upfront flat pricing, trained techs, fixed-right guarantee — and a refreshingly silly name.", path: "/about.html", h1: "Honestly great. We just have a funny name.", sub: "The story behind Probably Fine — and the very serious promises underneath the joke.", img: "about", preloadHero: "about", crumbs, inner, jsonld: [breadcrumbLD(crumbs), businessLD()] });
+  return pageShell({ title: "About | Probably Fine Garage Doors Greater Vancouver", desc: "Canadian-owned, honest garage door repair across Greater Vancouver. Upfront flat pricing, trained techs & a fixed-right guarantee. Silly name, serious work.", path: "/about.html", h1: "Honestly great. We just have a funny name.", sub: "The story behind Probably Fine — and the very serious promises underneath the joke.", img: "about", preloadHero: "about", crumbs, inner, jsonld: [breadcrumbLD(crumbs), businessLD()] });
 }
 
 function buildContact() {

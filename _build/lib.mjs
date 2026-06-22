@@ -181,6 +181,12 @@ ${sub ? `<p>${sub}</p>` : ""}
 </section>`;
 }
 
+// ---- freshness byline (helps AI answer engines + E-E-A-T) ----
+export function freshnessByline() {
+  const m = new Date().toLocaleDateString("en-CA", { month: "long", year: "numeric" });
+  return `<p class="freshness" aria-label="Last updated">${I.clock} Updated ${m} · written &amp; reviewed by the ${cfg.brandName} crew</p>`;
+}
+
 // ---- reusable blocks ----
 export function trustMicroline() {
   return `Licensed (business licence) · Insured · WorkSafeBC-covered`;

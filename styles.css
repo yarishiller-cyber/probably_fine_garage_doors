@@ -225,6 +225,8 @@ strong { color:var(--ink); }
 .answer { background:var(--brand-light); border-left:4px solid var(--brand); border-radius:var(--r-md);
   padding:var(--s-5); margin-bottom:var(--s-6); }
 .answer p:last-child { margin-bottom:0; }
+.freshness { display:inline-flex; align-items:center; gap:.4rem; font-size:var(--t-sm); color:var(--ink-soft); margin:0 0 var(--s-5); }
+.freshness svg { width:1em; height:1em; color:var(--brand); flex:none; }
 
 /* ============================ TRUST / REVIEWS ============================ */
 .trust-band { display:flex; flex-wrap:wrap; gap:var(--s-5) var(--s-7); justify-content:center; align-items:center; }
