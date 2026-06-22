@@ -148,6 +148,8 @@ strong { color:var(--ink); }
 .hero__sub { color:rgba(255,255,255,.92); font-size:var(--t-lg); max-width:46ch; }
 /* Global strong{color:var(--ink)} would render the hero prices dark-on-dark (invisible) */
 .hero strong, .hero__sub strong { color:var(--accent); }
+/* On mobile the sub-paragraph overlaps the technician's face — hide it there (kept on desktop) */
+@media (max-width:768px){ .hero__sub { display:none; } }
 .hero__rating { display:flex; align-items:center; gap:.6rem; margin-bottom:var(--s-4); font-weight:600; color:#fff; font-size:var(--t-sm); }
 .stars { color:var(--accent); letter-spacing:1px; display:inline-flex; gap:2px; vertical-align:middle; }
 .stars svg { width:1.05em; height:1.05em; flex:none; }
