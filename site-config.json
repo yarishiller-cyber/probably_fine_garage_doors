@@ -2,34 +2,64 @@
   "brandName": "Probably Fine Garage Doors",
   "domain": "probablyfinegaragedoors.ca",
   "repo": "probably_fine_garage_doors",
-
   "coverage": "gva-wide",
   "serviceFocus": null,
   "town": "Greater Vancouver",
   "region": "BC",
-  "coverageTowns": ["Vancouver", "Burnaby", "Surrey", "Richmond", "Coquitlam"],
-  "moreTowns": ["Port Coquitlam", "Port Moody", "New Westminster", "North Vancouver", "West Vancouver", "Delta", "Langley", "Maple Ridge", "Pitt Meadows", "White Rock"],
+  "coverageTowns": [
+    "Vancouver",
+    "Burnaby",
+    "Surrey",
+    "Richmond",
+    "Coquitlam"
+  ],
+  "moreTowns": [
+    "Port Coquitlam",
+    "Port Moody",
+    "New Westminster",
+    "North Vancouver",
+    "West Vancouver",
+    "Delta",
+    "Langley",
+    "Maple Ridge",
+    "Pitt Meadows",
+    "White Rock"
+  ],
   "neighbourhoods": [],
   "adjacentAreas": [],
-  "geo": { "lat": 49.2488, "lng": -123.0016 },
-
+  "geo": {
+    "lat": 49.2488,
+    "lng": -123.0016
+  },
   "email": "info@probablyfinegaragedoors.ca",
   "phone": "+1-778-800-0769",
   "phoneDisplay": "778-800-0769",
   "phoneTel": "+17788000769",
   "smsBody": "Hi Probably Fine — my garage door needs a look. Here's what's happening:",
-  "address": { "street": "", "city": "Vancouver", "region": "BC", "postalCode": "", "country": "CA" },
+  "address": {
+    "street": "",
+    "city": "Vancouver",
+    "region": "BC",
+    "postalCode": "",
+    "country": "CA"
+  },
   "hours": "Mo-Su 07:00-20:00",
   "priceRange": "$$",
-
   "emphasis": "residential",
   "primaryKeyword": "garage door repair Greater Vancouver",
-  "secondaryKeywords": ["garage door spring repair Vancouver", "garage door opener repair Burnaby", "same-day garage door repair Metro Vancouver"],
-
+  "secondaryKeywords": [
+    "garage door spring repair Vancouver",
+    "garage door opener repair Burnaby",
+    "same-day garage door repair Metro Vancouver"
+  ],
   "voice": "deadpan-reassuring, dry, confident; resolve the joke instantly then prove it with hard trust signals",
   "signatureHook": "We're not 'probably' fine. We're genuinely great.",
-  "localDetails": ["coastal rain & salt air rust springs and cables", "tri-cities mountain cold snaps spike spring failures", "older East Van character homes & laneway garages", "newer Surrey & Richmond builds with double doors"],
-
+  "localDetails": [
+    "coastal rain & salt air rust springs and cables",
+    "tri-cities mountain cold snaps spike spring failures",
+    "older East Van character homes & laneway garages",
+    "newer Surrey & Richmond builds with double doors"
+  ],
   "design": {
     "layoutVariant": "layout-a",
     "tokens": {
@@ -44,21 +74,37 @@
     },
     "motionPersonality": "crisp/snappy — confident quick reveals, a deadpan status-check device"
   },
-
   "imagery": {
     "styleBlock": "photorealistic documentary photography, natural Pacific-Northwest daylight, soft overcast, realistic skin and materials, candid, ordinary true-to-life working people, no studio lighting, no retouching",
     "brandBlock": "crew wears navy-blue work jackets with small amber chest logo and navy caps; white Ford Transit wrapped confident blue with amber stripe, 'Probably Fine Garage Doors' + 'info@probablyfinegaragedoors.ca' on the side, BC plate; brand colours blue & amber",
     "vanRef": "assets/brand/van-ref.png",
     "rules": "real average blue-collar people (not models); Metro-Vancouver homes & streets; EMAIL ok on wraps, NEVER a phone number"
   },
-
   "springPricing": {
-    "singleSpring": { "label": "Single spring replacement", "price": "710" },
-    "twoSpringsNewCables": { "label": "Two springs + new cables", "price": "840", "includes": ["new cables free"] },
-    "twoSpringsHighCycle": { "label": "Two high-cycle springs", "price": "1290", "includes": ["new cables free", "longer-life springs"] },
-    "freeWithEveryJob": ["free cables on 2-spring tiers", "free safety inspection"]
+    "singleSpring": {
+      "label": "Single spring replacement",
+      "price": "739"
+    },
+    "twoSpringsNewCables": {
+      "label": "Two springs + new cables",
+      "price": "851",
+      "includes": [
+        "new cables free"
+      ]
+    },
+    "twoSpringsHighCycle": {
+      "label": "Two high-cycle springs",
+      "price": "1274",
+      "includes": [
+        "new cables free",
+        "longer-life springs"
+      ]
+    },
+    "freeWithEveryJob": [
+      "free cables on 2-spring tiers",
+      "free safety inspection"
+    ]
   },
-
   "otherPricing": {
     "diagnostic": "39",
     "diagnosticNote": "waived when the repair goes ahead",
@@ -67,16 +113,22 @@
     "rollerFrom": "129",
     "openerRepairFrom": "149",
     "tuneUpFrom": "109",
-    "openerInstallFrom": "439",
-    "newDoorFrom": "1690"
+    "openerInstallFrom": "1311",
+    "newDoorFrom": "3647"
   },
-
   "partnerProgram": {
     "enabled": true,
     "headline": "We get more calls than we can take — partner with us for vetted overflow jobs",
-    "fields": ["name", "company", "trade/service", "service area", "phone", "email", "capacity/notes"]
+    "fields": [
+      "name",
+      "company",
+      "trade/service",
+      "service area",
+      "phone",
+      "email",
+      "capacity/notes"
+    ]
   },
-
   "features": {
     "floatingCallText": true,
     "footerPriceToggle": true,
