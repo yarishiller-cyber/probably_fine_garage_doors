@@ -33,6 +33,12 @@ export const I = {
 
 export function stars(n = 5) { return `<span class="stars" aria-label="${n} out of 5 stars" role="img">${I.star.repeat(n)}</span>`; }
 
+// ---- price transparency: hidden-by-default, revealed by the footer "Pricing" toggle ----
+// Shows `label` by default; the real `price` lives in data-px and is swapped in on toggle.
+export function px(label, price, cls = "") {
+  return `<span class="price-tag${cls ? " " + cls : ""}" data-px="${String(price).replace(/"/g, "&quot;")}">${label}</span>`;
+}
+
 // ---- testimonial card with reviewer photo ----
 export function reviewCard(r, extraStyle = "") {
   const photo = r.photo
@@ -200,10 +206,10 @@ export function footer() {
     <div class="footer__brand"><span class="brand__mark">${I.door}</span> ${cfg.brandName}</div>
     <p style="font-size:.9rem">Honestly great garage-door repair across Greater Vancouver. We just have a funny name. Same-day spring, opener, cable &amp; off-track repair — fixed right or we come back free.</p>
     <p style="font-size:.85rem">${I.shield} ${trustMicroline()}</p>
-    <div class="footer__price-toggle" hidden data-jsonly>
-      <button class="btn footer-btn" id="priceToggle" aria-expanded="false" aria-controls="footerPrices">${I.tag} See our prices</button>
+    <div class="footer__price-toggle">
+      <button type="button" class="btn footer-btn" id="pricing-toggle" aria-pressed="false">${I.tag} Pricing</button>
     </div>
-    <div class="footer-prices" id="footerPrices">
+    <div class="footer-prices" id="footerPrices" hidden>
       <h4>Honest Lower-Mainland pricing</h4>
       <table>
         <tr><td>Single torsion spring</td><td>$${p.singleSpring.price}</td></tr>
@@ -257,6 +263,16 @@ export function scripts() {
   <p>We use minimal cookies to make the site work and understand traffic. <a href="/privacy-policy.html">Privacy</a>.</p>
   <button class="btn footer-btn" id="cookieOk" type="button">Got it</button>
 </div>
+<script>(function(){var btn=document.getElementById('pricing-toggle');if(!btn)return;
+var panel=document.getElementById('footerPrices');
+var els=[].slice.call(document.querySelectorAll('[data-px]'));var saved=new Array(els.length);var on=false;
+var label=btn.innerHTML;
+btn.addEventListener('click',function(){on=!on;els.forEach(function(el,i){
+if(on){if(saved[i]==null)saved[i]=el.innerHTML;el.innerHTML=el.getAttribute('data-px');}
+else{if(saved[i]!=null)el.innerHTML=saved[i];}});
+document.body.classList.toggle('show-pricing',on);
+if(panel)panel.hidden=!on;
+btn.innerHTML=on?'Hide pricing':label;btn.setAttribute('aria-pressed',on?'true':'false');});})();</script>
 <script src="/script.js?v=${VER}" defer></script>
 <script type="module">
   import { animate, inView, scroll, stagger } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";

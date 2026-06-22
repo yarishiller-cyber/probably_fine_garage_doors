@@ -48,23 +48,7 @@
     window.addEventListener("resize", function () { if (!isMobile()) closeNav(); });
   }
 
-  // ---- Footer price reveal toggle (degrades to visible if no JS) ----
-  var priceToggle = document.getElementById("priceToggle");
-  var prices = document.getElementById("footerPrices");
-  if (priceToggle && prices) {
-    // Progressive enhancement: with JS we reveal the toggle button and collapse the
-    // panel. With NO JS the button stays hidden and the price panel is simply visible.
-    var toggleWrap = priceToggle.closest("[data-jsonly]");
-    if (toggleWrap) toggleWrap.hidden = false;
-    prices.hidden = true;
-    var priceIcon = priceToggle.querySelector("svg") ? priceToggle.querySelector("svg").outerHTML : "";
-    priceToggle.addEventListener("click", function () {
-      var open = priceToggle.getAttribute("aria-expanded") === "true";
-      priceToggle.setAttribute("aria-expanded", String(!open));
-      prices.hidden = open;
-      priceToggle.innerHTML = priceIcon + " " + (open ? "See our prices" : "Hide prices");
-    });
-  }
+  // Footer "Pricing" toggle (#pricing-toggle) is handled inline per FLEET-STANDARDS §2.
 
   // ---- Opener "view more" toggle ----
   var openerToggle = document.getElementById("openerToggle");

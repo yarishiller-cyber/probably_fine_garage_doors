@@ -2,7 +2,7 @@
 // generate.mjs — builds all static HTML for Probably Fine Garage Doors.
 import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import {
-  cfg, BASE, PHONE, TEL, EMAIL, SMS, I, stars, reviewCard,
+  cfg, BASE, PHONE, TEL, EMAIL, SMS, I, stars, reviewCard, px,
   head, header, floating, footer, scripts, picture, pagehead, ctaBand,
   faqBlock, trustMicroline, businessLD, breadcrumbLD, serviceLD, faqLD,
 } from "./lib.mjs";
@@ -72,7 +72,7 @@ function buildHome() {
   <div class="hero__copy" data-reveal>
     <div class="hero__rating">${stars(5)} <span>Loved by Greater Vancouver homeowners</span></div>
     <h1>We're not <span class="hl">"probably"</span> fine.<br>We're genuinely great.</h1>
-    <p class="hero__sub">Same-day spring, opener, cable &amp; off-track repair across Greater Vancouver — flat-priced <em>before</em> we start (spring repair <strong>$${cfg.springPricing.singleSpring.price} for one</strong> · <strong>$${cfg.springPricing.twoSpringsNewCables.price} for two</strong>). Funny name. Serious work.</p>
+    <p class="hero__sub">Same-day spring, opener, cable &amp; off-track repair across Greater Vancouver — flat-priced <em>before</em> we start (spring repair ${px("<strong>posted up front</strong>", `<strong>$${cfg.springPricing.singleSpring.price} for one · $${cfg.springPricing.twoSpringsNewCables.price} for two</strong>`)}). Funny name. Serious work.</p>
     <div class="btn-row hero-cta" style="margin-top:1.6rem">
       <a class="btn btn--primary btn--lg cta-pulse" href="tel:${TEL}">${I.phone} Call ${PHONE}</a>
       <a class="btn btn--white btn--lg" href="${SMS}">${I.msg} Text us</a>
@@ -200,13 +200,13 @@ function pricingTable() {
   const p = cfg.springPricing, o = cfg.otherPricing;
   const row = (name, detail, amt) => `<div class="pricerow"><div class="pricerow__label"><b>${name}</b><span>${detail}</span></div><div class="pricerow__amt">${amt}<small>installed</small></div></div>`;
   return `<div class="pricetable" data-stagger>
-${row("Spring replacement", `One spring $${p.singleSpring.price} · two springs + free cables $${p.twoSpringsNewCables.price} · same-day`, `$${p.singleSpring.price}–$${Number(p.twoSpringsHighCycle.price).toLocaleString()}`)}
+${row("Spring replacement", `Free cables on pairs · same-day`, px("Flat-rate, agreed up front", `$${p.singleSpring.price}–$${Number(p.twoSpringsHighCycle.price).toLocaleString()}`))}
 ${row("Cable repair", "Matched pair · free with any two-spring job", `from $${o.cableRepairFrom}`)}
 ${row("Off-track repair", "Re-track, straighten &amp; re-balance the door", `from $${o.offTrackFrom}`)}
 ${row("Opener repair", "Sensors, gears, boards, remotes — most brands", `from $${o.openerRepairFrom}`)}
-${row("LiftMaster opener — installed", "Chain, belt or wall-mount · programmed + haul-away", `from ${Number(o.openerInstallFrom).toLocaleString()}`)}
+${row("LiftMaster opener — installed", "Chain, belt or wall-mount · programmed + haul-away", px("Supplied &amp; installed", `from $${Number(o.openerInstallFrom).toLocaleString()}`))}
 ${row("Annual tune-up", "25-point service + safety test", `from $${o.tuneUpFrom}`)}
-${row("New garage door", "Insulated steel, glass or carriage · free measure", `from $${Number(o.newDoorFrom).toLocaleString()}`)}
+${row("New garage door", "Insulated steel, glass or carriage · free measure", px("Free on-site measure", `from $${Number(o.newDoorFrom).toLocaleString()}`))}
 <div class="pricenote">Diagnostic $${o.diagnostic}, ${o.diagnosticNote} · free safety inspection with every spring job · workmanship warranty as standard · certificates of insurance available for stratas &amp; property managers.</div>
 </div>`;
 }
@@ -214,13 +214,13 @@ ${row("New garage door", "Insulated steel, glass or carriage · free measure", `
 function cardPrice(slug) {
   const p = cfg.springPricing, o = cfg.otherPricing;
   return {
-    "garage-door-spring-repair": `$${p.singleSpring.price} / 1 · $${p.twoSpringsNewCables.price} / 2`,
+    "garage-door-spring-repair": px("Flat-rate · same-day", `$${p.singleSpring.price} / 1 · $${p.twoSpringsNewCables.price} / 2`),
     "garage-door-opener-repair": `from $${o.openerRepairFrom}`,
-    "garage-door-opener-installation": `from ${Number(o.openerInstallFrom).toLocaleString()} installed`,
+    "garage-door-opener-installation": px("Supplied &amp; installed", `from $${Number(o.openerInstallFrom).toLocaleString()} installed`),
     "garage-door-cable-repair": `from $${o.cableRepairFrom}`,
     "garage-door-off-track-repair": `from $${o.offTrackFrom}`,
     "garage-door-roller-repair": `from $${o.rollerFrom}`,
-    "new-garage-door-installation": `from $${Number(o.newDoorFrom).toLocaleString()} installed`,
+    "new-garage-door-installation": px("Free measure &amp; quote", `from $${Number(o.newDoorFrom).toLocaleString()} installed`),
     "garage-door-maintenance": `from $${o.tuneUpFrom}`,
     "emergency-garage-door-repair": `fast · same-day`,
   }[slug] || "";
@@ -289,7 +289,7 @@ function springTiers() {
   const tier = (t, featured, flag) => `<div class="tier${featured ? " tier--featured" : ""}">
 ${flag ? `<span class="tier__flag">${flag}</span>` : ""}
 <h3>${t.label}</h3>
-<div class="tier__price">${Number(t.price).toLocaleString()}</div>
+<div class="tier__price">${px("Flat price", `$${Number(t.price).toLocaleString()}`)}</div>
 <ul>${(t.bullets || []).map((b) => `<li>${I.check} ${b}</li>`).join("")}</ul>
 <a class="btn ${featured ? "btn--primary" : "btn--ghost"} btn--block" href="tel:${TEL}">${I.phone} Book this</a>
 </div>`;
@@ -337,7 +337,7 @@ function openerCard(m) {
       <span class="opener__tag">${m.tag}</span>
       <h3>${m.name}</h3>
       <p class="opener__spec">${m.hp} · ${m.tagline}</p>
-      <p class="opener__price">from ${price.toLocaleString()} <span class="opener__inst">installed</span></p>
+      <p class="opener__price">${px("Supplied &amp; installed", `from $${price.toLocaleString()}`)} <span class="opener__inst">installed</span></p>
       <ul class="opener__pills">${pills}</ul>
     </div>
   </div>

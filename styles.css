@@ -261,6 +261,13 @@ strong { color:var(--ink); }
 /* price reveal (footer toggle target can live anywhere) */
 .price-panel[hidden] { display:none; }
 
+/* hidden-by-default price (revealed by footer #pricing-toggle) — FLEET-STANDARDS §2 */
+.price-tag { font: inherit; color: inherit; }
+.svc-card__price .price-tag { font-weight:700; }
+body.show-pricing .price-tag { color: var(--brand-dark); }
+#pricing-toggle[aria-pressed="true"] { background: var(--accent); color:#1a1300; border-color: var(--accent); }
+#pricing-toggle[aria-pressed="true"] svg { opacity:1; }
+
 /* on-page "Real numbers" pricing table (Steveston-inspired) */
 .pricetable { max-width:860px; margin:2.5rem auto 0; background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); box-shadow:var(--shadow-sm); overflow:hidden; }
 .pricerow { display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1.1rem 1.4rem; border-bottom:1px solid var(--line); }
