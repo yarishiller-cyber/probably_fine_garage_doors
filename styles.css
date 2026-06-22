@@ -149,7 +149,8 @@ strong { color:var(--ink); }
 /* Global strong{color:var(--ink)} would render the hero prices dark-on-dark (invisible) */
 .hero strong, .hero__sub strong { color:var(--accent); }
 .hero__rating { display:flex; align-items:center; gap:.6rem; margin-bottom:var(--s-4); font-weight:600; color:#fff; font-size:var(--t-sm); }
-.stars { color:var(--accent); letter-spacing:1px; }
+.stars { color:var(--accent); letter-spacing:1px; display:inline-flex; gap:2px; vertical-align:middle; }
+.stars svg { width:1.05em; height:1.05em; flex:none; }
 .hero__trustline { margin-top:var(--s-5); display:flex; flex-wrap:wrap; gap:.5rem 1rem; font-size:var(--t-sm); color:rgba(255,255,255,.9); }
 .hero__trustline span { display:inline-flex; align-items:center; gap:.4rem; }
 .hero__trustline svg { color:var(--accent); }
@@ -230,9 +231,11 @@ strong { color:var(--ink); }
 .trust-band .item { display:flex; align-items:center; gap:.5rem; font-family:var(--font-head); font-weight:600; color:var(--ink); font-size:var(--t-sm); }
 .trust-band svg { color:var(--brand); }
 .review { background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); padding:var(--s-5); box-shadow:var(--shadow-sm); }
-.review__stars { color:var(--accent); margin-bottom:.4rem; }
+.review__stars { color:var(--accent); margin-bottom:.4rem; display:inline-flex; gap:2px; }
+.review__stars svg { width:1.05em; height:1.05em; flex:none; }
 .review p { color:var(--ink); font-size:var(--t-sm); margin-bottom:var(--s-4); }
-.review__who { font-size:var(--t-sm); color:var(--ink-soft); }
+.review__who { font-size:var(--t-sm); color:var(--ink-soft); display:flex; align-items:center; gap:.7rem; }
+.review__photo { width:46px; height:46px; border-radius:50%; object-fit:cover; flex:none; border:2px solid var(--brand-light); display:block; }
 .review__who b { font-family:var(--font-head); color:var(--ink); }
 
 /* ============================ PRICE TRANSPARENCY ============================ */

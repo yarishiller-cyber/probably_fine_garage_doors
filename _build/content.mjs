@@ -219,7 +219,7 @@ export const CITIES = [
       { q: "Do you work on older East Vancouver character homes?", a: "Constantly. Older single doors, original wood track and tight heritage garages are our daily work — we'll modernise the hardware without changing the look you want." },
       { q: "Can you fit an opener in a laneway-house garage?", a: "Yes — wall-mount jackshaft openers are made for low-headroom laneway garages. They clear the ceiling entirely and run quietly under living space." },
     ],
-    testimonial: { q: "Spring went at 6am with the car stuck inside. They picked up, gave me a flat price, and had it fixed before lunch. The name's a joke; the work wasn't.", who: "Daniel R.", where: "Hastings-Sunrise, Vancouver" },
+    testimonial: { q: "Spring went at 6am with the car stuck inside. They picked up, gave me a flat price, and had it fixed before lunch. The name's a joke; the work wasn't.", who: "Daniel R.", where: "Hastings-Sunrise, Vancouver", photo: "rev-daniel" },
   },
   {
     slug: "burnaby", img: "city-burnaby", name: "Burnaby",
@@ -236,7 +236,7 @@ export const CITIES = [
       { q: "My townhouse garage is under a bedroom — what's the quietest fix?", a: "A belt-drive opener plus sealed nylon rollers. It's the standard upgrade we recommend for Burnaby's attached garages under living space — you'll stop hearing the door upstairs." },
       { q: "My door struggles on a steep Burnaby driveway — why?", a: "A slope exposes any imbalance. The fix is proper re-balancing of the springs, not just more tension. We set it so the opener isn't straining every cycle." },
     ],
-    testimonial: { q: "Booked a tune-up for two doors at our Brentwood place. They found a fraying cable I'd never have spotted and swapped it on the spot for a fair price. No drama.", who: "Priya S.", where: "Brentwood, Burnaby" },
+    testimonial: { q: "Booked a tune-up for two doors at our Brentwood place. They found a fraying cable I'd never have spotted and swapped it on the spot for a fair price. No drama.", who: "Priya S.", where: "Brentwood, Burnaby", photo: "rev-priya" },
   },
   {
     slug: "surrey", img: "city-surrey", name: "Surrey",
@@ -253,7 +253,7 @@ export const CITIES = [
       { q: "My double garage door won't budge — is that the spring?", a: "Almost certainly. A big Surrey double door is too heavy to lift once the spring snaps. Don't force the opener — we'll fit correctly-sized springs the same day." },
       { q: "Do you repair larger shop or acreage doors in Cloverdale?", a: "Yes. We handle oversized and detached shop doors common on Cloverdale and Campbell Heights properties, with springs and rollers rated for the heavier duty." },
     ],
-    testimonial: { q: "Our double door dropped a spring the night before a road trip. They came out to Morgan Creek first thing, replaced both springs, free cables, exact price they quoted. Lifesavers.", who: "Marcus & Lena T.", where: "South Surrey" },
+    testimonial: { q: "Our double door dropped a spring the night before a road trip. They came out to Morgan Creek first thing, replaced both springs, free cables, exact price they quoted. Lifesavers.", who: "Marcus & Lena T.", where: "South Surrey", photo: "rev-marcus" },
   },
   {
     slug: "richmond", img: "city-richmond", name: "Richmond",
@@ -270,7 +270,7 @@ export const CITIES = [
       { q: "Do you serve Steveston and Terra Nova?", a: "Yes — all of Richmond including Steveston, Terra Nova, Brighouse, Seafair and Hamilton. Coastal corrosion jobs are our bread and butter here." },
       { q: "My cables look rusty — should I worry?", a: "Yes, especially near the water. Rusted cables fray and snap with little warning. A quick replacement now (from $159) beats an off-track door later." },
     ],
-    testimonial: { q: "Both cables had rusted through near the water in Steveston. They replaced them and the springs, explained the salt-air thing honestly, and didn't try to sell me a whole new door. Refreshing.", who: "Grace L.", where: "Steveston, Richmond" },
+    testimonial: { q: "Both cables had rusted through near the water in Steveston. They replaced them and the springs, explained the salt-air thing honestly, and didn't try to sell me a whole new door. Refreshing.", who: "Grace L.", where: "Steveston, Richmond", photo: "rev-grace" },
   },
   {
     slug: "coquitlam", img: "city-coquitlam", name: "Coquitlam",
@@ -287,6 +287,6 @@ export const CITIES = [
       { q: "Do you serve Burke Mountain and Westwood Plateau?", a: "Yes — all of Coquitlam including Burke Mountain, Westwood Plateau, Maillardville, Austin Heights and Coquitlam Centre. We stock springs sized for the big hillside double doors." },
       { q: "My door is sluggish in winter — what helps?", a: "Proper cold-weather lubrication, fresh rollers, and a balance check. A pre-winter tune-up (from $109) is the cheapest way to avoid the cold-snap breakdown." },
     ],
-    testimonial: { q: "First hard frost on Burke Mountain and the spring let go. They had the right size on the truck and sorted it same day. Straight pricing, genuinely nice guys.", who: "Kevin M.", where: "Burke Mountain, Coquitlam" },
+    testimonial: { q: "First hard frost on Burke Mountain and the spring let go. They had the right size on the truck and sorted it same day. Straight pricing, genuinely nice guys.", who: "Kevin M.", where: "Burke Mountain, Coquitlam", photo: "rev-kevin" },
   },
 ];

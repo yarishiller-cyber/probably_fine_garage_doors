@@ -31,7 +31,15 @@ export const I = {
   handshake: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 12 8 9l-4 4 5 5 2-2"/><path d="m13 12 3 3 4-4-5-5-2 2"/><path d="m11 12 2 2"/></svg>',
 };
 
-export function stars(n = 5) { return I.star.repeat(n); }
+export function stars(n = 5) { return `<span class="stars" aria-label="${n} out of 5 stars" role="img">${I.star.repeat(n)}</span>`; }
+
+// ---- testimonial card with reviewer photo ----
+export function reviewCard(r, extraStyle = "") {
+  const photo = r.photo
+    ? `<img class="review__photo" src="/assets/img/${r.photo}-256.webp" width="46" height="46" loading="lazy" decoding="async" alt="${r.who}, a Probably Fine Garage Doors customer">`
+    : "";
+  return `<div class="review"${extraStyle ? ` style="${extraStyle}"` : ""}><div class="review__stars">${I.star.repeat(5)}</div><p>"${r.q}"</p><div class="review__who">${photo}<span><b>${r.who}</b><br>${r.where}</span></div></div>`;
+}
 
 // ---- <head> ----
 export function head({ title, desc, path, ogImg = "/assets/img/home-hero-desktop-1600.webp", preloadHero = null, jsonld = [], noindex = false }) {

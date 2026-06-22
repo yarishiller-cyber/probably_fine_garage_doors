@@ -2,7 +2,7 @@
 // generate.mjs — builds all static HTML for Probably Fine Garage Doors.
 import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import {
-  cfg, BASE, PHONE, TEL, EMAIL, SMS, I, stars,
+  cfg, BASE, PHONE, TEL, EMAIL, SMS, I, stars, reviewCard,
   head, header, floating, footer, scripts, picture, pagehead, ctaBand,
   faqBlock, trustMicroline, businessLD, breadcrumbLD, serviceLD, faqLD,
 } from "./lib.mjs";
@@ -32,9 +32,9 @@ function quoteAside() {
 // ============================ HOME ============================
 function buildHome() {
   const reviews = [
-    { q: "Snapped spring, car trapped, kids late for school. They answered, quoted a flat price, and fixed it in under an hour. The name had me nervous — the work did not.", who: "Daniel R.", where: "Hastings-Sunrise, Vancouver" },
-    { q: "Got three quotes. Probably Fine was the only one who gave a real number over the phone and stuck to it. Replaced both springs, threw in the cables. Done.", who: "Marcus T.", where: "South Surrey" },
-    { q: "Booked a tune-up, expected an upsell, got an honest 'your door's good for years, here's what to watch.' Genuinely refreshing for this trade.", who: "Priya S.", where: "Brentwood, Burnaby" },
+    { q: "Snapped spring, car trapped, kids late for school. They answered, quoted a flat price, and fixed it in under an hour. The name had me nervous — the work did not.", who: "Daniel R.", where: "Hastings-Sunrise, Vancouver", photo: "rev-daniel" },
+    { q: "Got three quotes. Probably Fine was the only one who gave a real number over the phone and stuck to it. Replaced both springs, threw in the cables. Done.", who: "Marcus T.", where: "South Surrey", photo: "rev-marcus" },
+    { q: "Booked a tune-up, expected an upsell, got an honest 'your door's good for years, here's what to watch.' Genuinely refreshing for this trade.", who: "Priya S.", where: "Brentwood, Burnaby", photo: "rev-priya" },
   ];
   const svcCards = SERVICES.map((s) => `<a class="card svc-card hover-lift" href="/${s.slug}.html">
   <div class="svc-card__media zoom-frame">${picture(s.img, s.h1)}</div>
@@ -70,7 +70,7 @@ function buildHome() {
 <div class="container">
 <div class="hero__inner">
   <div class="hero__copy" data-reveal>
-    <div class="hero__rating"><span class="stars">${stars(5)}</span> <span>Loved by Greater Vancouver homeowners</span></div>
+    <div class="hero__rating">${stars(5)} <span>Loved by Greater Vancouver homeowners</span></div>
     <h1>We're not <span class="hl">"probably"</span> fine.<br>We're genuinely great.</h1>
     <p class="hero__sub">Same-day spring, opener, cable &amp; off-track repair across Greater Vancouver — flat-priced <em>before</em> we start (spring repair <strong>$${cfg.springPricing.singleSpring.price} for one</strong> · <strong>$${cfg.springPricing.twoSpringsNewCables.price} for two</strong>). Funny name. Serious work.</p>
     <div class="btn-row hero-cta" style="margin-top:1.6rem">
@@ -145,7 +145,7 @@ ${svcCards}
 <div class="container">
 <div class="center" data-reveal><span class="eyebrow">Social proof</span><h2>What Greater Vancouver neighbours say</h2><p class="lead">Real homeowners, real doors. (We route every review to our Google profile — no funny business with star ratings.)</p></div>
 <div class="grid grid--3" style="margin-top:2.5rem" data-stagger>
-${reviews.map((r) => `  <div class="review"><div class="review__stars">${stars(5)}</div><p>"${r.q}"</p><div class="review__who"><b>${r.who}</b><br>${r.where}</div></div>`).join("\n")}
+${reviews.map((r) => "  " + reviewCard(r)).join("\n")}
 </div>
 </div>
 </section>
@@ -393,7 +393,7 @@ ${pagehead({ crumbs, h1: c.h1, sub: c.sub, img: c.img })}
     <ul class="chips" style="margin-bottom:1.5rem">${nb}</ul>
     <h2>All our services in ${c.name}</h2>
     <div class="area-grid">${svc}</div>
-    <div class="review" style="margin:2rem 0"><div class="review__stars">${stars(5)}</div><p>"${c.testimonial.q}"</p><div class="review__who"><b>${c.testimonial.who}</b><br>${c.testimonial.where}</div></div>
+    ${reviewCard(c.testimonial, "margin:2rem 0")}
     <h2>${c.name} garage door FAQ</h2>
     ${faqBlock(c.faqs)}
     <h2>Other areas we serve</h2>
