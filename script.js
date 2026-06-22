@@ -132,4 +132,31 @@
   }
   wireForm("leadForm");
   wireForm("partnerForm");
+
+  // ---- Cookie consent (minimal, dismissible) ----
+  try {
+    var cookie = document.getElementById("cookie");
+    var cookieOk = document.getElementById("cookieOk");
+    if (cookie && cookieOk) {
+      if (!localStorage.getItem("pf_cookie_ok")) cookie.hidden = false;
+      cookieOk.addEventListener("click", function () {
+        try { localStorage.setItem("pf_cookie_ok", "1"); } catch (e) {}
+        cookie.hidden = true;
+      });
+    }
+  } catch (e) {}
+
+  // ---- Conversion event hooks (fire to GA4/dataLayer if present; harmless otherwise) ----
+  function track(method) {
+    try {
+      if (typeof window.gtag === "function") window.gtag("event", "contact", { method: method });
+      (window.dataLayer = window.dataLayer || []).push({ event: "contact", method: method });
+    } catch (e) {}
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href^='tel:'], a[href^='sms:'], a[href^='mailto:']");
+    if (!a) return;
+    var href = a.getAttribute("href");
+    track(href.indexOf("tel:") === 0 ? "call" : href.indexOf("sms:") === 0 ? "text" : "email");
+  });
 })();

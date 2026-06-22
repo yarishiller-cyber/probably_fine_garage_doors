@@ -245,7 +245,11 @@ export function footer() {
 
 // ---- closing scripts ----
 export function scripts() {
-  return `<script src="/script.js?v=${VER}" defer></script>
+  return `<div class="cookie" id="cookie" hidden>
+  <p>We use minimal cookies to make the site work and understand traffic. <a href="/privacy-policy.html">Privacy</a>.</p>
+  <button class="btn footer-btn" id="cookieOk" type="button">Got it</button>
+</div>
+<script src="/script.js?v=${VER}" defer></script>
 <script type="module">
   import { animate, inView, scroll, stagger } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
   window.__motion = { animate, inView, scroll, stagger };
