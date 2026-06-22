@@ -92,13 +92,7 @@ const AREA_LINKS = [
 export function header() {
   const svc = [`<a href="/services.html">All services</a>`, ...SERVICE_LINKS.map(([h, t]) => `<a href="${h}">${t}</a>`)].join("");
   const areas = AREA_LINKS.map(([h, t]) => `<a href="${h}">${t}</a>`).join("");
-  return `<div class="topbar">
-<div class="container topbar__in">
-  <span class="topbar__tag">${I.check} Funny name, serious work — same-day across Greater Vancouver</span>
-  <span class="topbar__right"><a href="tel:${TEL}">${I.phone} ${PHONE}</a><span class="topbar__hours">Mon–Sun 7am–8pm</span></span>
-</div>
-</div>
-<header class="site-header">
+  return `<header class="site-header">
 <div class="container">
 <nav class="nav" id="nav">
   <a class="brand" href="/">
