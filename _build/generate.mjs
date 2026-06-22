@@ -40,6 +40,7 @@ function buildHome() {
   <div class="svc-card__media zoom-frame">${picture(s.img, s.h1)}</div>
   <div class="svc-card__body">
     <h3>${s.nav}</h3>
+    <span class="svc-card__price">${cardPrice(s.slug)}</span>
     <p>${cardLine(s.slug)}</p>
     <span class="card__link">Learn more ${I.arrow}</span>
   </div>
@@ -71,7 +72,7 @@ function buildHome() {
   <div class="hero__copy" data-reveal>
     <div class="hero__rating"><span class="stars">${stars(5)}</span> <span>Loved by Greater Vancouver homeowners</span></div>
     <h1>We're not <span class="hl">"probably"</span> fine.<br>We're genuinely great.</h1>
-    <p class="hero__sub">Same-day garage door spring, opener, cable &amp; off-track repair across Greater Vancouver — at a flat price we tell you <em>before</em> we start. Funny name. Serious work.</p>
+    <p class="hero__sub">Same-day spring, opener, cable &amp; off-track repair across Greater Vancouver — flat-priced <em>before</em> we start (spring repair <strong>$${cfg.springPricing.singleSpring.price} for one</strong> · <strong>$${cfg.springPricing.twoSpringsNewCables.price} for two</strong>). Funny name. Serious work.</p>
     <div class="btn-row hero-cta" style="margin-top:1.6rem">
       <a class="btn btn--primary btn--lg cta-pulse" href="tel:${TEL}">${I.phone} Call ${PHONE}</a>
       <a class="btn btn--white btn--lg" href="${SMS}">${I.msg} Text us</a>
@@ -118,35 +119,10 @@ ${svcCards}
 </div>
 </section>
 
-<section class="section section--soft">
+<section class="section section--soft" id="pricing">
 <div class="container">
-<div class="layout-split">
-  <div data-reveal>
-    <span class="eyebrow">Price transparency</span>
-    <h2>The price we say is the price you pay</h2>
-    <p>Garage-door scams are a real thing — the BBB warns about $19.99 ads that become $1,000 invoices, mystery "shaft fees," and unmarked vans. We built this company to be the opposite of that.</p>
-    <p>You get a <strong>written quote before we touch a thing.</strong> Most repairs are flat-priced, posted right here on the site. The only thing that changes the number is you finding something we missed — and even then, you approve it first.</p>
-    <ul>
-      <li><strong>Single spring:</strong> $${cfg.springPricing.singleSpring.price} · <strong>Two springs + free cables:</strong> $${cfg.springPricing.twoSpringsNewCables.price}</li>
-      <li><strong>Cable repair</strong> from $${cfg.otherPricing.cableRepairFrom} · <strong>Opener repair</strong> from $${cfg.otherPricing.openerRepairFrom}</li>
-      <li><strong>Free</strong> safety inspection with every spring job</li>
-    </ul>
-    <p><a class="btn btn--ghost" href="/garage-door-spring-repair.html">${I.tag} See full spring pricing ${I.arrow}</a></p>
-  </div>
-  <div data-reveal="right">
-    <div class="aside-card">
-      <span class="price-note">${I.check} No $19.99 bait. No mystery fees.</span>
-      <h3 style="margin-top:1rem">What an honest quote includes</h3>
-      <ul>
-        <li>${I.check} A real diagnosis, not a sales pitch</li>
-        <li>${I.check} The flat price, in writing, up front</li>
-        <li>${I.check} Parts sized to your door, not "whatever fits"</li>
-        <li>${I.check} A workmanship warranty on the job</li>
-      </ul>
-      <p class="muted">Diagnostic call $${cfg.otherPricing.diagnostic} — ${cfg.otherPricing.diagnosticNote}.</p>
-    </div>
-  </div>
-</div>
+  <div class="center" data-reveal><span class="eyebrow">Honest pricing</span><h2>Real numbers, before we start</h2><p class="lead">The price is agreed on the phone or on arrival — never after the work's done. No $19.99 bait, no mystery "shaft fees," no upsells for parts you don't need.</p></div>
+  ${pricingTable()}
 </div>
 </section>
 
@@ -218,6 +194,36 @@ ${ctaBand("Ready when you are", "Broken spring, dead opener, or a door that won'
     desc: "Same-day garage door repair across Greater Vancouver — springs, openers, cables, off-track. Funny name, serious work. Upfront flat pricing, licensed & insured.",
     path: "/", preloadHero: "home-hero", jsonld,
   }) + header() + body + footer() + floating() + scripts();
+}
+
+function pricingTable() {
+  const p = cfg.springPricing, o = cfg.otherPricing;
+  const row = (name, detail, amt) => `<div class="pricerow"><div class="pricerow__label"><b>${name}</b><span>${detail}</span></div><div class="pricerow__amt">${amt}<small>installed</small></div></div>`;
+  return `<div class="pricetable" data-stagger>
+${row("Spring replacement", `One spring $${p.singleSpring.price} · two springs + free cables $${p.twoSpringsNewCables.price} · same-day`, `$${p.singleSpring.price}–$${Number(p.twoSpringsHighCycle.price).toLocaleString()}`)}
+${row("Cable repair", "Matched pair · free with any two-spring job", `from $${o.cableRepairFrom}`)}
+${row("Off-track repair", "Re-track, straighten &amp; re-balance the door", `from $${o.offTrackFrom}`)}
+${row("Opener repair", "Sensors, gears, boards, remotes — most brands", `from $${o.openerRepairFrom}`)}
+${row("LiftMaster opener — installed", "Chain, belt or wall-mount · programmed + haul-away", `from $${o.openerInstallFrom}`)}
+${row("Annual tune-up", "25-point service + safety test", `from $${o.tuneUpFrom}`)}
+${row("New garage door", "Insulated steel, glass or carriage · free measure", `from $${Number(o.newDoorFrom).toLocaleString()}`)}
+<div class="pricenote">Diagnostic $${o.diagnostic}, ${o.diagnosticNote} · free safety inspection with every spring job · workmanship warranty as standard · certificates of insurance available for stratas &amp; property managers.</div>
+</div>`;
+}
+
+function cardPrice(slug) {
+  const p = cfg.springPricing, o = cfg.otherPricing;
+  return {
+    "garage-door-spring-repair": `$${p.singleSpring.price} / 1 · $${p.twoSpringsNewCables.price} / 2`,
+    "garage-door-opener-repair": `from $${o.openerRepairFrom}`,
+    "garage-door-opener-installation": `from $${o.openerInstallFrom} installed`,
+    "garage-door-cable-repair": `from $${o.cableRepairFrom}`,
+    "garage-door-off-track-repair": `from $${o.offTrackFrom}`,
+    "garage-door-roller-repair": `from $${o.rollerFrom}`,
+    "new-garage-door-installation": `from $${Number(o.newDoorFrom).toLocaleString()} installed`,
+    "garage-door-maintenance": `from $${o.tuneUpFrom}`,
+    "emergency-garage-door-repair": `fast · same-day`,
+  }[slug] || "";
 }
 
 function cardLine(slug) {
