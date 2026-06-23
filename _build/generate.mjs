@@ -66,7 +66,7 @@ function buildHome() {
   const body = `
 <main id="main">
 <section class="hero">
-<div class="hero__bg">${picture("home-hero", "Probably Fine technician beside the branded service van at a Greater Vancouver home", { eager: true })}</div>
+<div class="hero__bg">${picture("home-hero", "Probably Fine technician beside the branded service van at a Greater Vancouver home", { eager: true, parallax: 0.12 })}</div>
 <div class="container">
 <div class="hero__inner">
   <div class="hero__copy" data-reveal>
@@ -136,7 +136,7 @@ ${svcCards}
     <p>So we did the opposite. A name you'll remember, paired with the stuff that actually matters: <strong>Canadian-owned, trained technicians, upfront flat pricing, and a fix-it-right-or-we-come-back guarantee.</strong> We're so bad at upselling that we'll just fix the spring you actually need.</p>
     <p><a class="btn btn--ghost" href="/about.html">More about us ${I.arrow}</a></p>
   </div>
-  <div data-reveal="right">${picture("about", "The Probably Fine crew beside the branded service van", { cls: "" })}</div>
+  <div data-reveal="right">${picture("about", "The Probably Fine crew beside the branded service van", { cls: "", parallax: 0.1 })}</div>
 </div>
 </div>
 </section>

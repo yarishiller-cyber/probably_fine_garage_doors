@@ -84,10 +84,13 @@ export function initMotion() {
   });
 
   // --- Subtle parallax ------------------------------------------------------------------
+  // Images carry CSS `transform:scale(1.08)` so the translate never reveals an edge; we bake
+  // that scale into the inline transform here (inline style would otherwise clobber the CSS).
   document.querySelectorAll("[data-parallax]").forEach((el) => {
     const intensity = parseFloat(el.getAttribute("data-parallax") || "0.2") || 0.2;
+    const scale = el.classList.contains("parallax") ? " scale(1.08)" : "";
     scroll(
-      (progress) => { el.style.transform = `translateY(${(progress - 0.5) * intensity * 120}px)`; },
+      (progress) => { el.style.transform = `translateY(${(progress - 0.5) * intensity * 120}px)${scale}`; },
       { target: el, offset: ["start end", "end start"] }
     );
   });

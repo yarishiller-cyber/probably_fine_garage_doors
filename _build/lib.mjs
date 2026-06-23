@@ -152,11 +152,13 @@ export function floating() {
 }
 
 // ---- hero / pagehead pictures ----
-export function picture(name, alt, { eager = false, cls = "" } = {}) {
+export function picture(name, alt, { eager = false, cls = "", parallax = 0 } = {}) {
+  const px = parallax ? ` data-parallax="${parallax}"` : "";
+  const imgCls = (cls + (parallax ? " parallax" : "")).trim();
   return `<picture>
   <source media="(max-width:768px)" srcset="/assets/img/${name}-mobile-960.webp 960w, /assets/img/${name}-mobile-480.webp 480w" sizes="100vw">
   <source media="(min-width:769px)" srcset="/assets/img/${name}-desktop-1600.webp 1600w, /assets/img/${name}-desktop-960.webp 960w" sizes="100vw">
-  <img class="${cls}" src="/assets/img/${name}-desktop-960.webp" width="1600" height="900" alt="${alt}" ${eager ? 'fetchpriority="high" decoding="async"' : 'loading="lazy" decoding="async"'}>
+  <img${imgCls ? ` class="${imgCls}"` : ""} src="/assets/img/${name}-desktop-960.webp" width="1600" height="900" alt="${alt}"${px} ${eager ? 'fetchpriority="high" decoding="async"' : 'loading="lazy" decoding="async"'}>
 </picture>`;
 }
 
@@ -164,7 +166,7 @@ export function picture(name, alt, { eager = false, cls = "" } = {}) {
 export function pagehead({ crumbs = [], h1, sub, img }) {
   const bg = img ? `<picture>
   <source media="(max-width:768px)" srcset="/assets/img/${img}-mobile-960.webp" >
-  <img class="pagehead__bg" src="/assets/img/${img}-desktop-1600.webp" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1600" height="900">
+  <img class="pagehead__bg parallax" src="/assets/img/${img}-desktop-1600.webp" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1600" height="900" data-parallax="0.12">
 </picture>` : "";
   const bc = crumbs.length ? `<nav class="breadcrumb" aria-label="Breadcrumb">${crumbs.map((c, i) => i === crumbs.length - 1 ? `<span>${c.name}</span>` : `<a href="${c.item}">${c.name}</a> / `).join("")}</nav>` : "";
   return `<section class="pagehead${img ? " pagehead--img" : ""}">

@@ -408,6 +408,14 @@ body.show-pricing .price-tag { color: var(--brand-dark); }
 @keyframes cta-pulse { 0%,100%{ box-shadow:0 0 0 0 rgba(var(--accent-rgb),0);} 50%{ box-shadow:0 0 0 8px rgba(var(--accent-rgb),.16);} }
 .cta-pulse { animation:cta-pulse 2.6s ease-in-out infinite; }
 
+/* Parallax: scale the image up a touch so the subtle scroll-translate never reveals an edge.
+   JS (motion.js) drives translateY; absolute-positioned bg images (.hero/.pagehead) are
+   already clipped by overflow:hidden. In-flow feature images get a clipped, rounded frame. */
+.parallax { will-change:transform; transform:scale(1.08); }
+img.parallax { display:block; }
+.layout-split picture:has(img.parallax) { display:block; overflow:hidden; border-radius:var(--r-lg); }
+.layout-split picture:has(img.parallax) img { width:100%; height:auto; }
+
 /* ============================ RESPONSIVE ============================ */
 @media (max-width:960px){
   .status-card { position:static; width:auto; max-width:300px; margin-top:var(--s-5); padding:.7rem .85rem;
