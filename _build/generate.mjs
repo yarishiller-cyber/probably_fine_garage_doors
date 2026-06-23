@@ -289,6 +289,7 @@ function springTiers() {
   const p = cfg.springPricing;
   const tier = (t, featured, flag) => `<div class="tier${featured ? " tier--featured" : ""}">
 ${flag ? `<span class="tier__flag">${flag}</span>` : ""}
+<div class="tier__media"><img src="/assets/img/spring-mobile-960.webp" alt="Garage door torsion spring replacement by a Probably Fine technician" loading="lazy" decoding="async" width="960" height="540"></div>
 <h3>${t.label}</h3>
 <div class="tier__price">${px("Flat price", `$${Number(t.price).toLocaleString()}`)}</div>
 <ul>${(t.bullets || []).map((b) => `<li>${I.check} ${b}</li>`).join("")}</ul>
@@ -333,7 +334,7 @@ function openerCard(m) {
   const pills = m.specs.slice(0, 4).map((sp, i) => `<li class="${i === 0 ? "is-feature" : ""}">${sp}</li>`).join("");
   return `<div class="opener">
   <div class="opener__main">
-    <img class="opener__img" src="/assets/openers/${m.image}" alt="${m.imageAlt}" loading="lazy" width="150" height="118">
+    <img class="opener__img" src="/assets/openers/${m.image}" alt="${m.imageAlt}" loading="lazy" width="160" height="160">
     <div class="opener__info">
       <span class="opener__tag">${m.tag}</span>
       <h3>${m.name}</h3>
