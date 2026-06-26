@@ -2,7 +2,7 @@
 // generate.mjs — builds all static HTML for Probably Fine Garage Doors.
 import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import {
-  cfg, BASE, PHONE, TEL, EMAIL, SMS, I, stars, reviewCard, px,
+  cfg, BASE, PHONE, TEL, EMAIL, SMS, I, stars, reviewCard, px, clean,
   head, header, floating, footer, scripts, picture, pagehead, ctaBand,
   faqBlock, trustMicroline, freshnessByline, businessLD, breadcrumbLD, serviceLD, faqLD,
 } from "./lib.mjs";
@@ -22,7 +22,7 @@ function quoteAside() {
   <div class="btn-row" style="flex-direction:column">
     <a class="btn btn--call btn--block cta-pulse" href="tel:${TEL}">${I.phone} Call ${PHONE}</a>
     <a class="btn btn--primary btn--block" href="${SMS}">${I.msg} Text us</a>
-    <a class="btn btn--ghost btn--block" href="/contact.html">Request a quote</a>
+    <a class="btn btn--ghost btn--block" href="/contact/">Request a quote</a>
   </div>
   <p class="muted" style="margin:1rem 0 0">${I.shield} ${trustMicroline()}</p>
 </div>
@@ -36,7 +36,7 @@ function buildHome() {
     { q: "Got three quotes. Probably Fine was the only one who gave a real number over the phone and stuck to it. Replaced both springs, threw in the cables. Done.", who: "Marcus T.", where: "South Surrey", photo: "rev-marcus" },
     { q: "Booked a tune-up, expected an upsell, got an honest 'your door's good for years, here's what to watch.' Genuinely refreshing for this trade.", who: "Priya S.", where: "Brentwood, Burnaby", photo: "rev-priya" },
   ];
-  const svcCards = SERVICES.map((s) => `<a class="card svc-card hover-lift" href="/${s.slug}.html">
+  const svcCards = SERVICES.map((s) => `<a class="card svc-card hover-lift" href="/${s.slug}/">
   <div class="svc-card__media zoom-frame">${picture(s.img, s.h1)}</div>
   <div class="svc-card__body">
     <h3>${s.nav}</h3>
@@ -48,7 +48,7 @@ function buildHome() {
 
   const areaCards = [...cfg.coverageTowns, ...cfg.moreTowns].map((c) => {
     const city = CITIES.find((x) => x.name === c);
-    const href = city ? `/service-areas/${city.slug}.html` : "/service-areas/";
+    const href = city ? `/service-areas/${city.slug}/` : "/service-areas/";
     return `<a href="${href}">${I.pin} ${c}</a>`;
   }).join("");
 
@@ -134,7 +134,7 @@ ${svcCards}
     <h2>A genuinely good company with a genuinely silly name</h2>
     <p>Here's the joke, resolved: we called ourselves <strong>Probably Fine</strong> because every garage-door company in Greater Vancouver sounds identical — "trusted, reliable, same-day, licensed &amp; insured." You can't tell them apart, and some of them are exactly the scam the BBB keeps warning about.</p>
     <p>So we did the opposite. A name you'll remember, paired with the stuff that actually matters: <strong>Canadian-owned, trained technicians, upfront flat pricing, and a fix-it-right-or-we-come-back guarantee.</strong> We're so bad at upselling that we'll just fix the spring you actually need.</p>
-    <p><a class="btn btn--ghost" href="/about.html">More about us ${I.arrow}</a></p>
+    <p><a class="btn btn--ghost" href="/about/">More about us ${I.arrow}</a></p>
   </div>
   <div data-reveal="right">${picture("about", "The Probably Fine crew beside the branded service van", { cls: "", parallax: 0.1 })}</div>
 </div>
@@ -256,7 +256,7 @@ function buildService(s) {
   if (s.openers) extra += openerPicker();
 
   const sections = s.sections.map((sec) => `<h2>${sec.h2}</h2>\n${sec.html}`).join("\n");
-  const otherSvc = SERVICES.filter((x) => x.slug !== s.slug).slice(0, 6).map((x) => `<a href="/${x.slug}.html">${x.icon} ${x.nav}</a>`).join("");
+  const otherSvc = SERVICES.filter((x) => x.slug !== s.slug).slice(0, 6).map((x) => `<a href="/${x.slug}/">${x.icon} ${x.nav}</a>`).join("");
 
   const body = `
 <main id="main">
@@ -378,8 +378,8 @@ function buildCity(c) {
     faqLD(c.faqs),
   ];
   const nb = c.neighbourhoods.map((n) => `<li>${n}</li>`).join("");
-  const svc = SERVICES.slice(0, 6).map((s) => `<a href="/${s.slug}.html">${s.icon} ${s.nav}</a>`).join("");
-  const otherCities = CITIES.filter((x) => x.slug !== c.slug).map((x) => `<a href="/service-areas/${x.slug}.html">${I.pin} ${x.name}</a>`).join("");
+  const svc = SERVICES.slice(0, 6).map((s) => `<a href="/${s.slug}/">${s.icon} ${s.nav}</a>`).join("");
+  const otherCities = CITIES.filter((x) => x.slug !== c.slug).map((x) => `<a href="/service-areas/${x.slug}/">${I.pin} ${x.name}</a>`).join("");
 
   const body = `
 <main id="main">
@@ -415,7 +415,7 @@ ${ctaBand(`Garage door trouble in ${c.name}?`, `Call or text for a flat written 
 // ============================ SERVICES HUB ============================
 function buildServicesHub() {
   const crumbs = [{ name: "Home", item: "/" }, { name: "Services", item: "/services.html" }];
-  const cards = SERVICES.map((s) => `<a class="card svc-card hover-lift" href="/${s.slug}.html">
+  const cards = SERVICES.map((s) => `<a class="card svc-card hover-lift" href="/${s.slug}/">
   <div class="svc-card__media zoom-frame">${picture(s.img, s.h1)}</div>
   <div class="svc-card__body"><h3>${s.nav}</h3><p>${cardLine(s.slug)}</p><span class="card__link">Learn more ${I.arrow}</span></div>
 </a>`).join("\n");
@@ -437,7 +437,7 @@ ${ctaBand("Not sure what's wrong?", "Tell us what the door's doing — we'll dia
 // ============================ SERVICE-AREAS HUB ============================
 function buildAreasHub() {
   const crumbs = [{ name: "Home", item: "/" }, { name: "Service Areas", item: "/service-areas/" }];
-  const cards = CITIES.map((c) => `<a class="card svc-card hover-lift" href="/service-areas/${c.slug}.html">
+  const cards = CITIES.map((c) => `<a class="card svc-card hover-lift" href="/service-areas/${c.slug}/">
   <div class="svc-card__media zoom-frame">${picture(c.img, c.h1)}</div>
   <div class="svc-card__body"><h3>${I.pin} ${c.name}</h3><p>${c.sub}</p><span class="card__link">${c.name} garage door repair ${I.arrow}</span></div>
 </a>`).join("\n");
@@ -500,7 +500,7 @@ function buildContact() {
 <div data-reveal>
 <div class="answer"><p><strong>The fastest way to get your garage door fixed is to call or text ${PHONE}.</strong> A real person answers, gives you a flat written price, and books a same-day arrival window wherever we can across Greater Vancouver. Prefer to send details? Use the form and we'll reply quickly.</p></div>
 <h2>Request a quote</h2>
-<form class="form" id="leadForm" data-endpoint="leads" data-redirect="/thank-you.html">
+<form class="form" id="leadForm" data-endpoint="leads" data-redirect="/thank-you/">
   <div class="field"><label for="name">Name</label><input id="name" name="name" required autocomplete="name"></div>
   <div class="field--row">
     <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" required autocomplete="tel"></div>
@@ -574,7 +574,7 @@ function buildPartner() {
 <li><strong>No lock-in.</strong> Take the jobs that fit your schedule.</li>
 </ul>
 <h2>Apply to become a partner</h2>
-<form class="form" id="partnerForm" data-endpoint="partners" data-redirect="/thank-you.html?p=1">
+<form class="form" id="partnerForm" data-endpoint="partners" data-redirect="/thank-you/?p=1">
   <div class="field--row">
     <div class="field"><label for="pname">Your name</label><input id="pname" name="name" required autocomplete="name"></div>
     <div class="field"><label for="pcompany">Company (if any)</label><input id="pcompany" name="company" autocomplete="organization"></div>
@@ -720,17 +720,17 @@ The name is a joke. The work is not.
 // ============================ RUN ============================
 console.log("Building Probably Fine Garage Doors…");
 write("index.html", buildHome());
-const urls = ["/"];
-write("services.html", buildServicesHub()); urls.push("/services.html");
-for (const s of SERVICES) { write(`${s.slug}.html`, buildService(s)); urls.push(`/${s.slug}.html`); }
+const urls = ["/"];                       // sitemap uses CLEAN extensionless URLs (FLEET-STANDARDS §0)
+write("services.html", buildServicesHub()); urls.push(clean("/services.html"));
+for (const s of SERVICES) { write(`${s.slug}.html`, buildService(s)); urls.push(clean(`/${s.slug}.html`)); }
 write("service-areas/index.html", buildAreasHub()); urls.push("/service-areas/");
-for (const c of CITIES) { write(`service-areas/${c.slug}.html`, buildCity(c)); urls.push(`/service-areas/${c.slug}.html`); }
-write("about.html", buildAbout()); urls.push("/about.html");
-write("contact.html", buildContact()); urls.push("/contact.html");
-write("faq.html", buildFaq()); urls.push("/faq.html");
-write("become-a-partner.html", buildPartner()); urls.push("/become-a-partner.html");
-write("privacy-policy.html", buildLegal("privacy")); urls.push("/privacy-policy.html");
-write("terms-of-service.html", buildLegal("terms")); urls.push("/terms-of-service.html");
+for (const c of CITIES) { write(`service-areas/${c.slug}.html`, buildCity(c)); urls.push(clean(`/service-areas/${c.slug}.html`)); }
+write("about.html", buildAbout()); urls.push(clean("/about.html"));
+write("contact.html", buildContact()); urls.push(clean("/contact.html"));
+write("faq.html", buildFaq()); urls.push(clean("/faq.html"));
+write("become-a-partner.html", buildPartner()); urls.push(clean("/become-a-partner.html"));
+write("privacy-policy.html", buildLegal("privacy")); urls.push(clean("/privacy-policy.html"));
+write("terms-of-service.html", buildLegal("terms")); urls.push(clean("/terms-of-service.html"));
 write("thank-you.html", buildThankYou());
 write("404.html", build404());
 write("robots.txt", buildRobots());

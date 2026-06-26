@@ -9,6 +9,17 @@ export const EMAIL = cfg.email;
 export const SMS = `sms:${TEL}?&body=${encodeURIComponent(cfg.smsBody)}`;
 export const VER = String(Date.now());
 
+// ---- clean extensionless directory-style URLs (FLEET-STANDARDS §0) ----
+// /x.html -> /x/  ·  /dir/x.html -> /dir/x/  ·  /index.html or /dir/index.html -> /  or /dir/
+// 404.html stays as-is (ErrorDocument only, never linked). Non-.html paths pass through.
+export function clean(p) {
+  if (!p) return p;
+  if (/404\.html$/.test(p)) return p;
+  let out = p.replace(/index\.html$/, "").replace(/([^/])\.html$/, "$1/");
+  if (out === "") out = "/";
+  return out;
+}
+
 // ---- inline icons (currentColor) ----
 export const I = {
   bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
@@ -49,7 +60,7 @@ export function reviewCard(r, extraStyle = "") {
 
 // ---- <head> ----
 export function head({ title, desc, path, ogImg = "/og/home.webp", preloadHero = null, jsonld = [], noindex = false }) {
-  const canonical = BASE + path;
+  const canonical = BASE + clean(path);
   const robots = noindex ? '\n<meta name="robots" content="noindex">' : "";
   const preload = preloadHero ? `
   <link rel="preload" as="image" href="/assets/img/${preloadHero}-mobile-960.webp" media="(max-width:768px)" fetchpriority="high">
@@ -94,27 +105,27 @@ ${ld}
 
 // ---- header / nav ----
 const SERVICE_LINKS = [
-  ["/garage-door-spring-repair.html", "Spring Repair"],
-  ["/garage-door-opener-repair.html", "Opener Repair"],
-  ["/garage-door-opener-installation.html", "Opener Installation"],
-  ["/garage-door-cable-repair.html", "Cable Repair"],
-  ["/garage-door-off-track-repair.html", "Off-Track Repair"],
-  ["/garage-door-roller-repair.html", "Roller Repair"],
-  ["/new-garage-door-installation.html", "New Garage Doors"],
-  ["/garage-door-maintenance.html", "Maintenance & Tune-Up"],
-  ["/emergency-garage-door-repair.html", "Emergency Repair"],
+  ["/garage-door-spring-repair/", "Spring Repair"],
+  ["/garage-door-opener-repair/", "Opener Repair"],
+  ["/garage-door-opener-installation/", "Opener Installation"],
+  ["/garage-door-cable-repair/", "Cable Repair"],
+  ["/garage-door-off-track-repair/", "Off-Track Repair"],
+  ["/garage-door-roller-repair/", "Roller Repair"],
+  ["/new-garage-door-installation/", "New Garage Doors"],
+  ["/garage-door-maintenance/", "Maintenance & Tune-Up"],
+  ["/emergency-garage-door-repair/", "Emergency Repair"],
 ];
 const AREA_LINKS = [
-  ["/service-areas/vancouver.html", "Vancouver"],
-  ["/service-areas/burnaby.html", "Burnaby"],
-  ["/service-areas/surrey.html", "Surrey"],
-  ["/service-areas/richmond.html", "Richmond"],
-  ["/service-areas/coquitlam.html", "Coquitlam"],
+  ["/service-areas/vancouver/", "Vancouver"],
+  ["/service-areas/burnaby/", "Burnaby"],
+  ["/service-areas/surrey/", "Surrey"],
+  ["/service-areas/richmond/", "Richmond"],
+  ["/service-areas/coquitlam/", "Coquitlam"],
   ["/service-areas/", "All service areas"],
 ];
 
 export function header() {
-  const svc = [`<a href="/services.html">All services</a>`, ...SERVICE_LINKS.map(([h, t]) => `<a href="${h}">${t}</a>`)].join("");
+  const svc = [`<a href="/services/">All services</a>`, ...SERVICE_LINKS.map(([h, t]) => `<a href="${h}">${t}</a>`)].join("");
   const areas = AREA_LINKS.map(([h, t]) => `<a href="${h}">${t}</a>`).join("");
   return `<header class="site-header">
 <div class="container">
@@ -124,12 +135,12 @@ export function header() {
     <span class="brand__name">Probably&nbsp;Fine <b>Garage&nbsp;Doors</b></span>
   </a>
   <div class="nav__links" id="navLinks">
-    <span class="has-menu"><a class="nav__parent" href="/services.html" aria-haspopup="true" aria-expanded="false">Services <span class="caret" aria-hidden="true">▾</span></a><span class="submenu">${svc}</span></span>
+    <span class="has-menu"><a class="nav__parent" href="/services/" aria-haspopup="true" aria-expanded="false">Services <span class="caret" aria-hidden="true">▾</span></a><span class="submenu">${svc}</span></span>
     <span class="has-menu"><a class="nav__parent" href="/service-areas/" aria-haspopup="true" aria-expanded="false">Service Areas <span class="caret" aria-hidden="true">▾</span></a><span class="submenu">${areas}</span></span>
-    <a href="/garage-door-spring-repair.html">Pricing</a>
-    <a href="/about.html">About</a>
-    <a href="/faq.html">FAQ</a>
-    <a href="/contact.html">Contact</a>
+    <a href="/garage-door-spring-repair/">Pricing</a>
+    <a href="/about/">About</a>
+    <a href="/faq/">FAQ</a>
+    <a href="/contact/">Contact</a>
   </div>
   <div class="nav__right">
     <a class="nav__phone" href="tel:${TEL}">${I.phone}<span class="nav__phone-label">${PHONE}</span></a>
@@ -168,7 +179,7 @@ export function pagehead({ crumbs = [], h1, sub, img }) {
   <source media="(max-width:768px)" srcset="/assets/img/${img}-mobile-960.webp" >
   <img class="pagehead__bg parallax" src="/assets/img/${img}-desktop-1600.webp" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1600" height="900" data-parallax="0.12">
 </picture>` : "";
-  const bc = crumbs.length ? `<nav class="breadcrumb" aria-label="Breadcrumb">${crumbs.map((c, i) => i === crumbs.length - 1 ? `<span>${c.name}</span>` : `<a href="${c.item}">${c.name}</a> / `).join("")}</nav>` : "";
+  const bc = crumbs.length ? `<nav class="breadcrumb" aria-label="Breadcrumb">${crumbs.map((c, i) => i === crumbs.length - 1 ? `<span>${c.name}</span>` : `<a href="${clean(c.item)}">${c.name}</a> / `).join("")}</nav>` : "";
   return `<section class="pagehead${img ? " pagehead--img" : ""}">
 ${bg}
 <div class="container">
@@ -259,16 +270,16 @@ export function footer() {
       <li>${I.clock} Mon–Sun, 7am–8pm</li>
       <li>${I.pin} Serving all of Greater Vancouver, BC</li>
     </ul>
-    <p style="margin-top:1rem"><a class="btn footer-btn" href="/become-a-partner.html">${I.handshake} Become a Partner</a></p>
+    <p style="margin-top:1rem"><a class="btn footer-btn" href="/become-a-partner/">${I.handshake} Become a Partner</a></p>
   </div>
 </div>
 <div class="footer-bottom">
   <span>© ${new Date().getFullYear()} ${cfg.brandName}. ${trustMicroline()}.</span>
   <span>
-    <a href="/about.html">About</a>
-    <a href="/contact.html">Contact</a>
-    <a href="/privacy-policy.html">Privacy</a>
-    <a href="/terms-of-service.html">Terms</a>
+    <a href="/about/">About</a>
+    <a href="/contact/">Contact</a>
+    <a href="/privacy-policy/">Privacy</a>
+    <a href="/terms-of-service/">Terms</a>
   </span>
 </div>
 </div>
@@ -278,7 +289,7 @@ export function footer() {
 // ---- closing scripts ----
 export function scripts() {
   return `<div class="cookie" id="cookie" hidden>
-  <p>We use minimal cookies to make the site work and understand traffic. <a href="/privacy-policy.html">Privacy</a>.</p>
+  <p>We use minimal cookies to make the site work and understand traffic. <a href="/privacy-policy/">Privacy</a>.</p>
   <button class="btn footer-btn" id="cookieOk" type="button">Got it</button>
 </div>
 <script>(function(){var btn=document.getElementById('pricing-toggle');if(!btn)return;
@@ -330,7 +341,7 @@ export function businessLD() {
 export function breadcrumbLD(crumbs) {
   return {
     "@context": "https://schema.org", "@type": "BreadcrumbList",
-    "itemListElement": crumbs.map((c, i) => ({ "@type": "ListItem", "position": i + 1, "name": c.name, "item": BASE + c.item })),
+    "itemListElement": crumbs.map((c, i) => ({ "@type": "ListItem", "position": i + 1, "name": c.name, "item": BASE + clean(c.item) })),
   };
 }
 
@@ -343,7 +354,7 @@ export function serviceLD({ serviceType, desc, minPrice, maxPrice, price, path }
     "serviceType": serviceType, "description": desc,
     "provider": { "@id": `${BASE}/#business` },
     "areaServed": [...cfg.coverageTowns, ...cfg.moreTowns].map((c) => ({ "@type": "City", "name": c })),
-    "url": BASE + path,
+    "url": BASE + clean(path),
     "offers": offer,
   };
 }
